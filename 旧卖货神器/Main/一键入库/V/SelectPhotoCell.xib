@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SelectPhotoCell">
+            <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ydV-sB-y2y">
+                        <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
+                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nochoise.png" translatesAutoresizingMaskIntoConstraints="NO" id="xfX-yA-DNh">
+                        <rect key="frame" x="80" y="5" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="7kw-fs-fxS"/>
+                            <constraint firstAttribute="width" constant="20" id="Jue-vx-g1O"/>
+                        </constraints>
+                    </imageView>
+                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OtQ-6b-E4Q">
+                        <rect key="frame" x="42" y="42" width="24" height="24"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="7fp-by-Yi5"/>
+                            <constraint firstAttribute="height" constant="24" id="tQL-q3-Z4y"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaP-Fs-6gb">
+                        <rect key="frame" x="42" y="42" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="goC-Au-lLh"/>
+                            <constraint firstAttribute="height" constant="24" id="jgc-fn-5TW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="OtQ-6b-E4Q" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="2Et-aA-rre"/>
+                <constraint firstItem="GaP-Fs-6gb" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Q71-iZ-ONS"/>
+                <constraint firstItem="ydV-sB-y2y" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="RUy-Vz-vDZ"/>
+                <constraint firstItem="xfX-yA-DNh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="agY-tw-ciU"/>
+                <constraint firstItem="ydV-sB-y2y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="cST-xN-Eyk"/>
+                <constraint firstAttribute="trailing" secondItem="ydV-sB-y2y" secondAttribute="trailing" id="egp-FL-hgI"/>
+                <constraint firstItem="OtQ-6b-E4Q" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="n0E-f3-hoE"/>
+                <constraint firstAttribute="bottom" secondItem="ydV-sB-y2y" secondAttribute="bottom" id="nvB-BF-iqU"/>
+                <constraint firstAttribute="trailing" secondItem="xfX-yA-DNh" secondAttribute="trailing" constant="8" id="s2S-l6-wrK"/>
+                <constraint firstItem="GaP-Fs-6gb" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="wkt-B9-YAN"/>
+            </constraints>
+            <connections>
+                <outlet property="bgView" destination="OtQ-6b-E4Q" id="dc7-dL-dQv"/>
+                <outlet property="imageV" destination="ydV-sB-y2y" id="8wy-v8-foH"/>
+                <outlet property="numLabel" destination="GaP-Fs-6gb" id="eN2-mH-4EL"/>
+                <outlet property="selectImageV" destination="xfX-yA-DNh" id="5Ea-o5-ynJ"/>
+            </connections>
+            <point key="canvasLocation" x="-14" y="-8"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="nochoise.png" width="40" height="40"/>
+    </resources>
+</document>

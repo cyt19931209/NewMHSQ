@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="AccountListCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n49-hc-N7P">
+                        <rect key="frame" x="46" y="13" width="198" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="j52-ix-4RR"/>
+                            <constraint firstAttribute="width" constant="198" id="sLc-kk-aHB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLJ-lw-Zy4">
+                        <rect key="frame" x="349" y="15" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="dsk-dX-Rlb"/>
+                            <constraint firstAttribute="height" constant="16" id="fEb-eA-4Vj"/>
+                        </constraints>
+                        <state key="normal" image="delet.png"/>
+                        <connections>
+                            <action selector="delectAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="HTa-ye-6W0"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbE-GK-I7d">
+                        <rect key="frame" x="10" y="8" width="109" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="109" id="6Yz-q7-ghC"/>
+                            <constraint firstAttribute="height" constant="31" id="bFb-OH-R0R"/>
+                        </constraints>
+                        <connections>
+                            <action selector="buttonAction1:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ya4-UF-JLA"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chs.png" translatesAutoresizingMaskIntoConstraints="NO" id="mtx-TE-kuh">
+                        <rect key="frame" x="10" y="16" width="26" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="eEI-X2-hqm"/>
+                            <constraint firstAttribute="width" constant="26" id="ykk-Eo-g3c"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group1.png" translatesAutoresizingMaskIntoConstraints="NO" id="4RX-OU-4Wv">
+                        <rect key="frame" x="318" y="16" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="u0n-fA-UG5"/>
+                            <constraint firstAttribute="height" constant="16" id="wNc-4m-uyJ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="RbE-GK-I7d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="1xb-u2-oNo"/>
+                    <constraint firstItem="wLJ-lw-Zy4" firstAttribute="leading" secondItem="4RX-OU-4Wv" secondAttribute="trailing" constant="15" id="9ba-u5-4VG"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="wLJ-lw-Zy4" secondAttribute="trailing" constant="2" id="FwD-CK-1CH"/>
+                    <constraint firstItem="wLJ-lw-Zy4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="IrQ-Qo-8Ve"/>
+                    <constraint firstItem="4RX-OU-4Wv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="WWv-f3-37L"/>
+                    <constraint firstItem="RbE-GK-I7d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="WtM-Z1-3OZ"/>
+                    <constraint firstItem="mtx-TE-kuh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="XES-fU-VEQ"/>
+                    <constraint firstItem="mtx-TE-kuh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="cum-fz-O8P"/>
+                    <constraint firstItem="n49-hc-N7P" firstAttribute="leading" secondItem="mtx-TE-kuh" secondAttribute="trailing" constant="10" id="geE-tv-kSb"/>
+                    <constraint firstItem="n49-hc-N7P" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="lCc-pL-gHa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="JGImageV" destination="4RX-OU-4Wv" id="EQk-i9-MVW"/>
+                <outlet property="delectButton" destination="wLJ-lw-Zy4" id="70y-PC-2cW"/>
+                <outlet property="slectImageV" destination="mtx-TE-kuh" id="Mt1-wz-brG"/>
+                <outlet property="titleLabel" destination="n49-hc-N7P" id="QcD-y1-8Ij"/>
+            </connections>
+            <point key="canvasLocation" x="67.5" y="135"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Group1.png" width="32" height="32"/>
+        <image name="chs.png" width="52" height="32"/>
+        <image name="delet.png" width="24" height="24"/>
+    </resources>
+</document>

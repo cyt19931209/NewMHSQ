@@ -1,0 +1,350 @@
+//
+//  SYGAPI.pch
+//  奢易购3.0
+//
+//  Created by guest on 16/7/18.
+//  Copyright © 2016年 cyt. All rights reserved.
+//
+
+#ifndef SYGAPI_pch
+#define SYGAPI_pch
+#import "RGBColor.h"
+#import "UIViewExt.h"
+#import "DataSeviece.h"
+#import "NULLHandle.h"
+#import "UIImageView+WebCache.h"
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#define kAppKey         @"1799887612"
+#define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
+#define URL_WXAPPID @"wx7c0bea3b9354b827"
+
+
+#define RSASyg_Public_key_FORM @"-----BEGIN PUBLIC KEY-----\
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDE5rg3mehVXDa7rxudj7UDOec0\
+vYtBzyNdQwyKyhPhuXUWJhoiOcqmIrCXN0NRe3TlLp1pvbNsAIForyfm6SB2mwsp\
+xx9ZM1ftOa6dQ4KBpD5BX92yGTm96asvbSi9UFLNAV/FVnOL/w/qxhgBAWKPuB0a\
+HHY6G1Ps8uIajxhd/QIDAQAB\
+-----END PUBLIC KEY-----\
+"
+
+//屏宽屏高
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+//
+//#define BaseUrl @"http://test.sheyigou.com/index.php?s=/Api/"
+//#define imgUrl @"http://images.sheyigou.com"
+//#define WDUrl @"http://test.sheyigou.com"
+//#define HXPushName @"ios_production"
+//#define HXUserName @"sheygigoude_"
+
+
+
+
+#define BaseUrl @"http://syg.hpdengshi.com/index.php?s=/Api/"
+#define WDUrl @"http://syg.sheyigou.com"
+#define imgUrl @"http://imagetest.sheyigou.com"
+#define HXPushName @"ios_debug"
+#define HXUserName @"sheygigoudebug_"
+
+
+
+
+
+//主登录登录
+#define  master_loginhtmlA_API @"Login/master_login.html"
+//子账号登录
+#define child_loginhtml_API @"Login/child_login.html"
+//验证码
+#define send_codehtml_API @"SmsCode/send_code.html"
+
+//账号注册
+#define registerhtml_API @"User/register.html"
+//找回密码
+#define find_passwordhtml @"User/find_password.html"
+
+//获取财务账户列表
+#define get_accounthtm_API @"PayAccount/get_account.html"
+//获取财务账户类型
+#define get_account_typehtml @"PayAccount/get_account_type.html"
+//添加财务账户
+#define add_accounthtml @"PayAccount/add_account.html"
+//删除财务账号
+#define delete_accounthtml @"PayAccount/delete_account.html"
+//编辑财务账户
+#define edit_accounthtml @"PayAccount/edit_account.html"
+//人员账户列表
+#define get_userhtml @"User/get_user.html"
+//人员账户删除
+#define delete_userhtml @"User/delete_user.html"
+//添加人员账户
+#define add_userhtml @"User/add_user.html"
+//编辑人员账号
+#define edit_userhtml @"User/edit_user.html"
+//编辑商户
+#define edit_shop_infohtml @"Shop/edit_shop_info.html"
+
+//获取商户的货物分类
+#define get_category_listhtml @"Category/get_category_list.html"
+//修改货物分类
+#define edit_categoryhtml @"Category/edit_category.html"
+//删除货物分类
+#define delete_categoryhtml @"Category/delete_category.html"
+//添加货物分类
+#define add_categoryhtml @"Category/add_category.html"
+//获取客户列表
+#define get_customerhtml @"Customer/get_customer.html"
+//编辑客户列表
+#define edit_customerhtml @"Customer/edit_customer.html"
+//货物总数进库出库数据统计
+#define get_goods_input_outhtml @"Statistics/get_goods_input_out.html"
+//获取库存商品列表
+#define get_goods_listhtml @"Goods/get_goods_list.html"
+//获取库存商品详情
+#define get_goodshtml @"Goods/get_goods.html"
+//编辑商品
+#define edit_goodshtm @"Goods/edit_goods.html"
+//添加商品
+#define add_goodshtml @"Goods/add_goods.html"
+//删除商品
+#define delete_goodshtml @"Goods/delete_goods.html"
+//添加客户
+#define add_customerhtml @"Customer/add_customer.html"
+//删除客户
+#define delete_customerhtml @"Customer/delete_customer.html"
+
+
+//获取添加编辑时需要的信息
+#define create_goods_snhtml @"Goods/create_goods_sn.html"
+//获取销售记录列表
+#define get_sales_list_by_timehtml @"Sales/get_sales_list_by_time.html"
+//获取销售详情
+#define Salesget_saleshtml @"Sales/get_sales.html"
+//获取寄卖的统计数据
+#define get_consighment_statisticshtml @"Statistics/get_consighment_statistics.html"
+//获取账本列表数据
+#define pay_log_recordhtml @"PayLog/pay_log_record.html"
+//获取账本统计数据
+#define get_input_payhtml @"Statistics/get_input_pay.html"
+//获取寄卖商品信息列表
+#define get_consighment_listhtml @"Consighment/get_consighment_list.html"
+//获取寄卖详情
+#define get_consighmenthtml @"Consighment/get_consighment.html"
+//获取销售利润统计
+#define get_sales_statisticshtml @"Statistics/get_sales_statistics.html"
+//账本记录详情
+#define get_payloghtml @"PayLog/get_paylog.html"
+
+//搜索寄卖数据
+#define consighment_searchhtml @"Search/consighment_search.html"
+//账本搜索
+#define paylog_searchhtml @"Search/paylog_search.html"
+//库存搜索
+#define goods_searchhtml @"Search/goods_search.html"
+//搜索销售记录
+#define sales_searchhtml @"Search/sales_search.html"
+//搜索全部 账本 寄卖 销售 库存
+#define search_allhtml @"Search/search_all.html"
+//收支记录标记已阅读
+#define pay_log_readhtml @"PayLog/pay_log_read.html"
+
+//首页销售挂单列表
+#define uninput_sales_listhtml @"Sales/uninput_sales_list.html"
+//首页寄卖挂单列表
+#define get_consihment_unpayhtml @"Consighment/get_consihment_unpay.html"
+//首页回收挂单列表
+#define get_recovery_unpayhtml @"Recovery/get_recovery_unpay.html"
+//首页详情
+#define get_saleshtml @"Sales/get_sales.html"
+//寄卖取回
+#define redemptionhtml @"Goods/redemption.html"
+//寄卖结算
+#define consighmenthtml @"Sales/consighment.html"
+//添加销售
+#define add_saleshtml @"Sales/add_sales.html"
+
+//销售时搜索置换的商品
+#define search_displace_goodshtml @"Goods/search_displace_goods.html"
+//
+#define get_goods_by_snhtml @"Search/get_goods_by_sn.html"
+//销售挂单
+#define continutehtml @"Sales/continute.html"
+//收银台收付款
+#define add_pay_loghtml @"PayLog/add_pay_log.html"
+
+//消息判断
+#define get_unreadhtml @"Messagerie/get_unread.html"
+//消息列表
+#define get_messagerie_listhtml @"Messagerie/get_messagerie_list.html"
+//消息详情
+#define get_messagerie_detailhtml @"Messagerie/get_messagerie_detail.html"
+//图片上传
+#define uploadimghtml @"Upload/uploadimg.html"
+//重新寄卖
+#define re_consighmenthtml @"Goods/re_consighment.html"
+//取消回收商品挂单
+#define Goodscancel_pausehtml @"Goods/cancel_pause.html"
+//取消销售挂单
+#define Salescancel_pausehtml @"Sales/cancel_pause.html"
+
+//分类获取属性字段
+#define get_category_attributehtml @"Category/get_category_attribute.html"
+
+//删除销售记录
+#define delete_saleshtml @"Sales/delete_sales.html"
+
+//修改收支记录
+#define edit_pay_loghtml @"PayLog/edit_pay_log.html"
+
+//更新手机号或者邮箱
+#define change_accounthtml @"User/change_account.html"
+
+//分享获取品牌
+#define get_share_brandshtml @"Share/get_share_brands.html"
+//获取分享的分类
+#define get_share_categoryhtml @"Share/get_share_category.html"
+//分享获取库存
+#define Shareget_goods_listhtml @"Share/get_goods_list.html"
+//添加绑定账号
+#define Shareadd_share_accounthtml @"Share/share_account.html"
+//获取绑定帐号
+#define Shareget_share_accounthtml @"Share/get_share_account.html"
+//编辑绑定账户
+#define edit_share_accounthtml @"Share/share_account.html"
+//删除绑定账户
+#define delete_share_accounthtml @"Share/delete_share_account.html"
+//编辑添加分享记录
+#define goods_sharehtml @"Share/goods_share.html"
+//分享商品接口
+#define share_outhtml @"Share/share_out.html"
+//删除绑定账户
+#define delete_share_accounthtml @"Share/delete_share_account.html"
+//修改商品信息
+#define update_goodshtml @"Goods/update_goods.html"
+//更新新浪授权信息
+#define up_sae_accesss_tokenhtml @"Share/up_sae_access_token.html"
+//获取列表和搜索分享记录
+#define get_share_listhtml @"ShareRecord/get_share_list.html"
+//分享下架接口
+#define down_goodshtml @"Share/down_goods.html"
+//分享商品上架
+#define up_goodshtml @"Share/up_goods.html"
+//获取分享记录详情
+#define get_share_detailshtml @"ShareRecord/get_share_details.html"
+//获取分享库存详细信息
+#define get_goods_detailshtml @"ShareGoods/get_goods_details.html"
+//设置默认分享账号
+#define default_accounthtml @"Share/default_account.html"
+//获取微店的分类
+#define get_vdian_categoryhtml @"Share/get_vdian_category.html"
+//平台分享短信发送
+#define SendSmshtml @"Share/SendSms.html"
+//短信分享帐号绑定
+#define editSmsUserhtml @"Share/editSmsUser.html"
+//获取库存列表（新）
+#define get_goods_list_newshtml @"Share/get_goods_list_news.html"
+
+//获取其他平台的参数
+#define get_platform_paramhtml @"Share/get_platform_param.html"
+//添加其他平台参数
+#define add_platform_paramhtml @"Share/add_platform_param.html"
+//图片排序
+#define sort_photohtml @"Goods/sort_photo.html"
+
+//微博微信分享增加统计数量
+#define add_share_loghtml @"Share/add_share_log.html"
+
+//恢复已经删除的商品
+#define rollback_goodshtml @"Goods/rollback_goods.html"
+
+//获取PUSH信息和数量
+#define get_jpushhtml @"Jpush/get_jpush.html"
+//获取货物所在的位置
+#define get_goods_positionhtml @"Share/get_goods_position.html"
+//允许子账号修改商品
+#define change_user_privilegehtml @"User/change_user_privilege.html"
+//获得子账号修改商品
+#define get_user_privilegehtml @"User/get_user_privilege.html"
+//获取当前用户信息
+#define get_userinfohtml @"User/get_userinfo.html"
+
+//获取库存信息(无搜索)
+#define Shareget_goods_listhtml @"ShareGoods/get_goods_list.html"
+//获取伙伴列表
+#define get_friend_listhtml @"Friend/get_friend_list.html"
+//搜索好友
+#define search_friendhtml @"Friend/search_friend.html"
+//添加伙伴
+#define Friendaddhtml @"Friend/add.html"
+//获取待处理伙伴请求
+#define get_friend_applyhtml @"Friend/get_friend_apply.html"
+//获取伙伴店铺信息
+#define get_friend_shop_infohtml @"Friend/get_friend_shop_info.html"
+//获取伙伴商品
+#define get_friend_goods_listhtml @"Friend/get_friend_goods_list.html"
+//处理伙伴请求
+#define apply_friendhtml @"Friend/apply_friend.html"
+//获取待处理好友请求数量
+#define get_apply_counthtml @"Friend/get_apply_count.html"
+//获取好友商品详情
+#define get_friend_goods_detailhtml @"Friend/get_friend_goods_detail.html"
+//解除伙伴关系
+#define remove_friendhtml @"Friend/remove_friend.html"
+//获取店铺参数
+#define get_shop_settinghtml @"Shop/get_shop_setting.html"
+//设置店铺参数
+#define settinghtml @"Shop/setting.html"
+//获取伙伴关系状态
+#define get_friend_shop_statushtml @"Friend/get_friend_shop_status.html"
+//搜索全部商品（包含伙伴商品）
+#define get_all_goods_listhtml @"Share/get_all_goods_list.html"
+//将消息标记为已读
+#define set_readhtml @"Share/set_read.html"
+//获取伙伴最近商品的商品数量
+#define get_recently_friend_goods_counthtml @"Friend/get_recently_friend_goods_count.html"
+
+//版本更新
+#define versionjson @"/version.json?q="
+
+//材质
+#define get_materialhtml @"Share/get_material.html"
+//功能
+#define get_functionhtml @"Share/get_function.html"
+//附件
+#define get_adjuncthtml @"Share/get_adjunct.html"
+//获取材料纯度接口
+#define get_purityhtml @"Share/get_purity.html"
+//获取宝石种类
+#define get_share_gemstonehtml @"Share/get_share_gemstone.html"
+//获取宝石的属性备选属性
+#define get_share_gemstone_attributehtml @"Share/get_share_gemstone_attribute.html"
+//获取七牛上传的token
+#define get_qiniu_tokenhtml @"Qiniu/get_qiniu_token.html"
+//获取热门推荐店铺
+#define get_hot_shop_listhtml @"ShareHotshop/get_hot_shop_list.html"
+//获取关注列表
+#define get_follow_shop_listhtml @"Friend/get_follow_shop_list.html"
+//好友关注
+#define follow_shophtml @"Friend/follow_shop.html"
+//取消关注
+#define unfollow_shophtml @"Friend/unfollow_shop.html"
+//获取同行商品列表
+#define get_shop_goods_listhtml @"ShareGoods/get_shop_goods_list.html"
+//获取好友信息
+#define get_friend_shop_detailshtml @"Friend/get_friend_shop_details.html"
+//搜索好友详情
+#define search_friendhtml @"Friend/search_friend.html"
+//获取店铺信息
+#define get_shop_infohtml @"Shop/get_shop_info.html"
+//获取商品列表
+#define ShareGoodsget_goods_listhtml @"ShareGoods/get_goods_list.html"
+//获取推荐同行的商品
+#define get_goods_source_listhtml @"ShareGoods/get_goods_source_list.html"
+//获取最近商品增加数量
+#define get_increase_numshtml @"ShareGoods/get_increase_nums.html"
+//获取店铺的账号列表
+#define get_shop_user_listhtml @"Easemob/get_shop_user_list.html"
+
+
+#endif /* SYGAPI_pch */
