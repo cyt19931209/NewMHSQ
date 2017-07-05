@@ -117,13 +117,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     return 48;
+    
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    
     NSDictionary *dic = _dataArr[indexPath.row];
     
     if ([dic[@"status"] isEqualToString:@"4"]) {
@@ -150,8 +151,6 @@
 
 
 
-
-
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)])
@@ -166,8 +165,6 @@
 
 - (void)NewPartnerNotification:(NSNotification*)noti{
     
-//    NSString *str = [noti object];
-    
     
     [self loadData];
 
@@ -180,7 +177,6 @@
     
 }
 
-
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -192,7 +188,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
     

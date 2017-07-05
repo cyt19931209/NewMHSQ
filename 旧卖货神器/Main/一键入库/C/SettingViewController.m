@@ -18,6 +18,9 @@
 #import "MyPartnerViewController.h"
 #import "ZLPhoto.h"
 #import "AFNetworking.h"
+#import "SharedItem.h"
+#import <RongIMKit/RongIMKit.h>
+
 
 @interface SettingViewController ()<UINavigationControllerDelegate,ZLPhotoPickerViewControllerDelegate>{
 
@@ -97,7 +100,7 @@
     
     [[UIApplication sharedApplication].keyWindow addSubview:codeView];
     
-    QGView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, codeView.width - 30, 270)];
+    QGView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 34, codeView.width - 30, 270)];
     
     QGView.backgroundColor = [RGBColor colorWithHexString:@"d8d8d8"];
     
@@ -105,14 +108,42 @@
     
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(0, 300, codeView.width, 16);
+    label.frame = CGRectMake(0, 0, codeView.width, 34);
     label.text = @"扫一扫，随时关注我的货源";
-    label.font = [UIFont fontWithName:@".PingFangSC-Regular" size:16];
+    label.font = [UIFont fontWithName:@".PingFangSC-Regular" size:12];
     label.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1/1.0];
     label.textAlignment = NSTextAlignmentCenter;
     
     [codeView addSubview:label];
 
+    NSArray *titleArr = @[@"保存图片",@"分享"];
+    
+    NSArray *imgArr = @[@"save",@"share1"];
+    
+    for (int i = 0; i < 2; i++) {
+
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        button.frame = CGRectMake(codeView.width/2 * i, 304, codeView.width/2 , 46);
+        
+        [button setTitle:titleArr[i] forState:UIControlStateNormal];
+        
+        [button setTitleColor:[RGBColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+        
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        [button setImage:[UIImage imageNamed:imgArr[i]] forState:UIControlStateNormal];
+        
+        [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0,-10, 0,0)];
+
+        button.tag = 100 + i;
+        
+        [codeView addSubview:button];
+        
+    }
+    
     
     
 //    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
@@ -128,6 +159,67 @@
 //
     
 }
+
+
+
+- (void)buttonAction:(UIButton*)bt{
+    
+    bgView.hidden = YES;
+    
+    codeView.hidden = YES;
+    
+
+    if (bt.tag == 100) {
+        
+        UIImageWriteToSavedPhotosAlbum(QGView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+
+    }else{
+
+        NSMutableArray *array = [[NSMutableArray alloc]init];
+                
+        UIImage *imagerang = QGView.image;
+        
+        NSLog(@"%lf %lf",imagerang.size.width,imagerang.size.height);
+        
+        NSString *path_sandox = NSHomeDirectory();
+        
+        NSString *imagePath = [path_sandox stringByAppendingString:[NSString stringWithFormat:@"/Documents/ShareWX%d.jpg",0]];
+        [UIImagePNGRepresentation(imagerang) writeToFile:imagePath atomically:YES];
+        
+        NSURL *shareobj = [NSURL fileURLWithPath:imagePath];
+        
+        /** 这里做个解释 imagerang : UIimage 对象  shareobj:NSURL 对象 这个方法的实际作用就是 在吊起微信的分享的时候 传递给他 UIimage对象,在分享的时候 实际传递的是 NSURL对象 达到我们分享九宫格的目的 */
+        
+        SharedItem *item = [[SharedItem alloc] initWithData:imagerang andFile:shareobj];
+        
+        [array addObject:item];
+        
+        
+        NSLog(@"%@",array);
+        
+        UIActivityViewController *activityViewController =[[UIActivityViewController alloc] initWithActivityItems:array
+                                                                                            applicationActivities:nil];
+        
+        activityViewController.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypeAirDrop];
+        
+        [self presentViewController:activityViewController animated:TRUE completion:nil];
+        
+
+    }
+
+}
+
+// 图片保存完成
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"图片保存完成" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    
+
+    [alertV show];
+
+}
+
 
 
 //隐藏视图
@@ -251,7 +343,6 @@
     }else if (indexPath.row == 4){
         
         
-        
         //人员管理
         FinanceViewController *financeVC = [[FinanceViewController alloc]init];
         
@@ -275,6 +366,10 @@
         [defaults removeObjectForKey:@"Text"];
         
         [defaults synchronize];
+        
+        [[RCIM sharedRCIM] logout];
+
+        
 
     }else if (indexPath.row == 2){
     
@@ -319,9 +414,8 @@
         [_FocusOnButton setTitle:result[@"result"][@"data"][@"me_follow_nums"] forState:UIControlStateNormal];
         
         [_OnFocusButton setTitle:result[@"result"][@"data"][@"follow_me_nums"] forState:UIControlStateNormal];
-
+    
         [QGView sd_setImageWithURL:[NSURL URLWithString:result[@"result"][@"data"][@"qrcode_url"]]];
-        
         
     } failure:^(NSError *error) {
         
@@ -680,6 +774,8 @@
     
     NSMutableArray *imageArr1 = [NSMutableArray array];
     
+    
+    
     for (NSInteger i = 0; i < assets.count ; i++) {
         //
         if ([assets[i] isKindOfClass:[ZLPhotoAssets class]]) {
@@ -702,6 +798,12 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
+        
+        
+        NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+        
+        NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+
         NSDictionary *SYGData = [defaults objectForKey:@"SYGData"];
         
         NSMutableDictionary *params1 = [NSMutableDictionary dictionary];
@@ -755,7 +857,7 @@
                             
                             [dic1 setObject:responseObject[@"result"][@"data"][@"file_name"] forKey:@"logo"];
                             
-                            [_iconButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl,responseObject[@"result"][@"data"][@"file_name"]]] forState:UIControlStateNormal  placeholderImage:[UIImage imageNamed:@"mrtx1"]];
+                            [_iconButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,responseObject[@"result"][@"data"][@"file_name"]]] forState:UIControlStateNormal  placeholderImage:[UIImage imageNamed:@"mrtx1"]];
                             
                             [dic setObject:[dic1 copy] forKey:@"shopinfo"];
                             

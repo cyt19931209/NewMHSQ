@@ -10,4 +10,9 @@
 
 @interface UIButton (Graphic)
 
+
+- (void)verticalImageAndTitle:(CGFloat)spacing;
+
+
 @end
+

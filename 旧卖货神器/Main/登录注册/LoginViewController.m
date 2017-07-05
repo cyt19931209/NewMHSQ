@@ -13,6 +13,7 @@
 #import "OnePublishingViewController.h"
 #import "JPUSHService.h"
 #import "BaseTabBarController.h"
+#import "RYDataManager.h"
 
 
 @interface LoginViewController ()<UITextFieldDelegate>{
@@ -379,7 +380,6 @@
     
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     
-
     UIButton *button = [self.view viewWithTag:200];
     NSString *url;
     if ([phoneTextField.text isEqualToString:@""]) {
@@ -416,7 +416,6 @@
     
     }
 
-    
     [DataSeviece requestUrl:url params:params success:^(id result) {
         NSLog(@"%@",result);
         
@@ -443,12 +442,17 @@
             
             [defaults synchronize];
             
+            [RYDataManager RYTokenAndLogin];
+            
+
             [[NSNotificationCenter defaultCenter] postNotificationName:@"DataNotifocation" object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"HomeNotification" object:nil];
             
             [JPUSHService setTags:[NSSet setWithObjects:result[@"result"][@"data"][@"shop_id"],nil] alias:result[@"result"][@"data"][@"id"] fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
                 NSLog(@"%d %@ %@",iResCode,iTags,iAlias);
             }];
+            
+            
 
         }else{
             

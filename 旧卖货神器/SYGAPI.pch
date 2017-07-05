@@ -8,16 +8,21 @@
 
 #ifndef SYGAPI_pch
 #define SYGAPI_pch
+
+
+
 #import "RGBColor.h"
 #import "UIViewExt.h"
 #import "DataSeviece.h"
 #import "NULLHandle.h"
 #import "UIImageView+WebCache.h"
 #import "WeiboSDK.h"
-#import "WXApi.h"
+
+
 #define kAppKey         @"1799887612"
+#define MWAppKey         @"3CHZAYS34B7TNJ6LOTS2KJ1MCYFPVLUU"
+
 #define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
-#define URL_WXAPPID @"wx7c0bea3b9354b827"
 
 
 #define RSASyg_Public_key_FORM @"-----BEGIN PUBLIC KEY-----\
@@ -28,29 +33,30 @@ HHY6G1Ps8uIajxhd/QIDAQAB\
 -----END PUBLIC KEY-----\
 "
 
+//缩略
+#define thumbnail_img @"?imageView2/1/w/320/h/320/q/75"
+
 //屏宽屏高
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-//
+
+//测试
+//#define BaseUrl @"http://syg.hpdengshi.com/index.php?s=/Api/"
+//#define WDUrl @"http://syg.sheyigou.com"
+//#define imgUrl_API @"http://imagetest.sheyigou.com"
+//#define RYUserId @"sheyigoudebug_"
+
+
+//正式
 //#define BaseUrl @"http://test.sheyigou.com/index.php?s=/Api/"
-//#define imgUrl @"http://images.sheyigou.com"
+//#define imgUrl_API @"http://images.sheyigou.com"
 //#define WDUrl @"http://test.sheyigou.com"
-//#define HXPushName @"ios_production"
-//#define HXUserName @"sheygigoude_"
+//#define RYUserId @"sheyigou"
+//
 
-
-
-
-#define BaseUrl @"http://syg.hpdengshi.com/index.php?s=/Api/"
-#define WDUrl @"http://syg.sheyigou.com"
-#define imgUrl @"http://imagetest.sheyigou.com"
-#define HXPushName @"ios_debug"
-#define HXUserName @"sheygigoudebug_"
-
-
-
-
+//IOS切换至正式版本
+#define is_ios_onlinehtml @"http://syg.sheyigou.com/index.php?s=/Api/ApiBase/is_ios_online.html"
 
 //主登录登录
 #define  master_loginhtmlA_API @"Login/master_login.html"
@@ -344,7 +350,16 @@ HHY6G1Ps8uIajxhd/QIDAQAB\
 //获取最近商品增加数量
 #define get_increase_numshtml @"ShareGoods/get_increase_nums.html"
 //获取店铺的账号列表
-#define get_shop_user_listhtml @"Easemob/get_shop_user_list.html"
+#define get_shop_user_listhtml @"RongCloud/get_shop_user_list.html"
+//获取用户的登录token
+#define get_user_tokenhtml @"RongCloud/get_user_token.html"
+//获取聊天对象信息
+#define get_user_infohtml @"RongCloud/get_user_info.html"
+
 
 
 #endif /* SYGAPI_pch */
+
+
+
+

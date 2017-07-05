@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RYSelectListView.h"
 
-@interface PeerHeaderView : UIView<UIAlertViewDelegate>
+@interface PeerHeaderView : UIView<UIAlertViewDelegate>{
+
+    UIView *bgView;
+    
+    RYSelectListView *RYView;
+
+}
 
 @property (nonatomic,strong) NSDictionary *dic;
 
@@ -18,6 +25,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *DYLabel;
 @property (weak, nonatomic) IBOutlet UIButton *DYButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *WXButton;
+@property (weak, nonatomic) IBOutlet UIButton *phoneButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
+@property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 
 
 @property (nonatomic,assign) BOOL isMyFriend;

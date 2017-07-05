@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "RepertoryPublishViewController.h"
+#import "RYSelectListView.h"
+#import "BaseChatViewController.h"
 
 @interface ReleaseHistoryCell : UITableViewCell<UIActionSheetDelegate,UIAlertViewDelegate,UITextFieldDelegate>{
-
 
     
     UIView *bgView;
@@ -24,7 +25,6 @@
     
     NSArray *imgArr;
     
-    
     UIAlertView *alertV1;
     UIAlertView *alertV2;
     
@@ -34,11 +34,15 @@
     UIView *addView;
     
     NSString *SPMSStr;
+    
+    RYSelectListView *RYView;
 
+    
+    
 }
 
 
-
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 
 @property (nonatomic,strong) UIButton *selectSPMSButton;
 
@@ -47,8 +51,6 @@
 @property (nonatomic,strong) UIImageView *selectSPMSImageV;
 
 @property (nonatomic,strong) UIImageView *selectfriendImageV;
-
-
 
 
 @property (weak, nonatomic) IBOutlet UIButton *logoButton;
@@ -106,9 +108,6 @@
 
 
 
-
-
-
 @property (weak, nonatomic) IBOutlet UIButton *PHButton;
 @property (weak, nonatomic) IBOutlet UIButton *ADMButton;
 @property (weak, nonatomic) IBOutlet UIButton *WDButton;
@@ -146,7 +145,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *ADMSJLLeft;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *JABLeft;
-
 
 
 

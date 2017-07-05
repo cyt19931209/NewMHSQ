@@ -240,8 +240,15 @@
         
         for (NSString *str in editArr) {
             
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             
-            phoneStr = [NSString stringWithFormat:@"%@,%@",phoneStr,[str substringFromIndex:imgUrl.length + 1]];
+            NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+            
+            NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+            
+
+            
+            phoneStr = [NSString stringWithFormat:@"%@,%@",phoneStr,[str substringFromIndex:imgUrl_API.length + 1]];
 
 
             
@@ -304,7 +311,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
     

@@ -7,6 +7,8 @@
 //
 
 #import "ChatListViewController.h"
+#import "BaseChatViewController.h"
+#import "NoticeViewController.h"
 
 @interface ChatListViewController ()
 
@@ -15,23 +17,75 @@
 @implementation ChatListViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    //设置需要显示哪些类型的会话
+    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_SYSTEM)]];
+    
+    self.navigationItem.title = @"消息";
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *RYUserId = serviceData[@"RYUserId"];
+
+    [[RCIMClient sharedRCIMClient] setConversationToTop:ConversationType_SYSTEM targetId:[NSString stringWithFormat:@"%@1",RYUserId] isTop:YES];
+
+    self.topCellBackgroundColor = [UIColor clearColor];
+    
+    self.conversationListTableView.tableFooterView = [[UIView alloc]init];
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    UIImage *image = [UIImage imageNamed:@"navbar@2x"];
+    [self.navigationController.navigationBar setBackgroundImage:image
+                                                  forBarMetrics:UIBarMetricsDefault];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSFontAttributeName:[UIFont systemFontOfSize:18],
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
+    
+    [self.navigationController.navigationBar setShadowImage:nil];
+
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
+         conversationModel:(RCConversationModel *)model
+               atIndexPath:(NSIndexPath *)indexPath {
+
+    NSLog(@"%@",model.targetId);
+    
+    if (indexPath.row == 0) {
+        
+        NoticeViewController *noticeVC = [[NoticeViewController alloc]init];
+        
+        noticeVC.hidesBottomBarWhenPushed = YES;
+
+        [self.navigationController pushViewController:noticeVC animated:YES];
+        
+    }else{
+        
+        BaseChatViewController *conversationVC = [[BaseChatViewController alloc]init];
+        
+        conversationVC.hidesBottomBarWhenPushed = YES;
+        
+        conversationVC.conversationType = model.conversationType;
+        
+        conversationVC.targetId = model.targetId;
+        
+        conversationVC.title = @"消息";
+        
+        [self.navigationController pushViewController:conversationVC animated:YES];
+        
+    }
 }
-*/
+
 
 @end

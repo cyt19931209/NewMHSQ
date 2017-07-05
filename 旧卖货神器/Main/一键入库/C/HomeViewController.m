@@ -32,7 +32,6 @@
     
     UILabel* BQlabel;
     
-
     NSString *typeStr;
     
 }
@@ -109,7 +108,6 @@
     
     homeButton.frame = CGRectMake(0, 0, 63, 22);
     
-    
     [homeButton setTitleColor:[RGBColor colorWithHexString:@"949DFF"] forState:UIControlStateNormal];
     
     [homeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -13, 0, 13)];
@@ -176,12 +174,10 @@
     
     [BQimageV removeFromSuperview];
     [BQlabel removeFromSuperview];
-    
 
     UIView *redView = [self.tabBarController.tabBar viewWithTag:500];
 
     redView.hidden = YES;
-    
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -199,26 +195,20 @@
 
     [params setObject:typeStr forKey:@"type"];
     
-    
-    
     [DataSeviece requestUrl:url params:params success:^(id result) {
         
         NSLog(@"%@ %@",result,result[@"result"][@"msg"]);
         
         if (result[@"result"][@"data"][@"increase"]) {
-            
 
             if (![result[@"result"][@"data"][@"increase"] isEqualToString:@"0"]) {
-                
-                // 提示用户最新的数量
 
+                // 提示用户最新的数量
                 [self showNewStatusesCount:[result[@"result"][@"data"][@"increase"] intValue]];
                 
             }
-            
         }
-        
-        
+
         if (page == 1) {
             
             [_dataArr removeAllObjects];
@@ -244,11 +234,12 @@
                                 
                 [_dataArr addObject:dic];
             }
-            
+
         }
         
         [_myTableView.header endRefreshing];
         [_myTableView.footer endRefreshing];
+        
         [_myTableView reloadData];
         
         
@@ -284,7 +275,6 @@
         NSLog(@"%@",error);
         
     }];
-    
     
     
 }
@@ -369,7 +359,6 @@
 //搜索
 - (void)rightBtnAction{
     
-    
     ReleaseHistoryViewController *ReleaseHistoryVC = [[ReleaseHistoryViewController alloc]init];
     ReleaseHistoryVC.is_delete = @"2";
     
@@ -381,8 +370,8 @@
     
     [self.navigationController pushViewController:ReleaseHistoryVC animated:YES];
     
-
 }
+
 //添加
 - (void)rightBtnAction1{
     
@@ -398,24 +387,35 @@
     
     NSArray *selectTypeArr = [defaults objectForKey:[NSString stringWithFormat:@"%@Type",SYGData[@"id"]]];
     
-    OneButtonPublishingViewController *OneButtonPublishingVC = [[UIStoryboard storyboardWithName:@"AddNew" bundle:nil] instantiateViewControllerWithIdentifier:@"OneButtonPublishingViewController"];
+    UIStoryboard *sb =  [UIStoryboard storyboardWithName:@"AddNew" bundle:nil];
+
+    NSLog(@"%@",sb);
     
-    OneButtonPublishingVC.isOnePush = YES;
+    OneButtonPublishingViewController *oneButtonPublishingVC = [sb instantiateViewControllerWithIdentifier:@"OneButtonPublishingViewController"];
     
-    OneButtonPublishingVC.typeArr = typeArr;
+    
+    NSLog(@"%@",oneButtonPublishingVC);
+    
+//    OneButtonPublishingViewController *OneButtonPublishingVC = [[UIStoryboard storyboardWithName:@"AddNew" bundle:nil] instantiateViewControllerWithIdentifier:@"OneButtonPublishingViewController"];
+//    
+    oneButtonPublishingVC.isOnePush = YES;
+    
+    oneButtonPublishingVC.typeArr = typeArr;
     
     if (selectTypeArr == nil) {
         
-        OneButtonPublishingVC.selectTypeArr = typeArr;
+        oneButtonPublishingVC.selectTypeArr = typeArr;
 
     }else{
     
-        OneButtonPublishingVC.selectTypeArr = selectTypeArr;
+        oneButtonPublishingVC.selectTypeArr = selectTypeArr;
         
     }
     
+    oneButtonPublishingVC.hidesBottomBarWhenPushed = YES;
+
     
-    [self.navigationController pushViewController:OneButtonPublishingVC animated:YES];
+    [self.navigationController pushViewController:oneButtonPublishingVC animated:YES];
     
 
 //    
@@ -448,7 +448,7 @@
 
         page = 1;
         
-        [self loadData];
+//        [self loadData];
 
     }else if (buttonIndex == 1){
         
@@ -458,7 +458,7 @@
 
         page = 1;
 
-        [self loadData];
+//        [self loadData];
 
     }else if (buttonIndex == 2){
         
@@ -468,10 +468,16 @@
         
         page = 1;
 
-        [self loadData];
+//        [self loadData];
         
     }
     
+//    [_myTableView setContentOffset:CGPointMake(0,0) animated:NO];
+//    
+//    [self loadData];
+
+
+    [_myTableView.mj_header beginRefreshing];
 
 }
 
@@ -518,7 +524,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
     
     
     return 0.00001f;
@@ -695,7 +700,7 @@
 
 - (void)UpDataTabBarNotification{
 
-    [_myTableView.header beginRefreshing];
+    [_myTableView.mj_header beginRefreshing];
 
 }
 
@@ -727,7 +732,13 @@
     
     NSLog(@"%@",SYGData);
     
-    [leftBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl,SYGData[@"shopinfo"][@"logo"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mrtx1"]];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+
+    
+    [leftBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,SYGData[@"shopinfo"][@"logo"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mrtx1"]];
     
 }
 @end

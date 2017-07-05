@@ -21,14 +21,13 @@
 
 @property (nonatomic,strong) NSMutableArray *errorArr;
 
-
-
 @end
 
 @implementation ReleaseCompleteViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _errorArr = [NSMutableArray array];
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -40,7 +39,6 @@
     UIBarButtonItem * leftButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     
     self.navigationItem.leftBarButtonItem = leftButtonItem;
-    
     
     
     if (!_isCopy && !_isUpData) {
@@ -174,7 +172,6 @@
         
     }
 
-    
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(20, TJLabel.bottom + 64, kScreenWidth - 40, 1)];
     
@@ -406,7 +403,6 @@
 
 //微博发送
 - (void)WBButtonAction{
-
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -476,7 +472,6 @@
     
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width, height));
     
-    
     NSInteger height1 = 0;
     
     for (int i = 0; i < imageArr.count; i++) {
@@ -507,18 +502,9 @@
     
     NSMutableArray *imageArr = [NSMutableArray array];
     
-//    for (NSString *str in _dataDic[@"img"]) {
-//        
-//        if (![str isEqualToString:@""]) {
-//            
-//            [urlArr addObject:str];
-//            
-//        }
-//        
-//    }
-//
-    
     NSDictionary *imageDic = _dataDic[@"img"];
+    
+    NSLog(@"%@",_dataDic);
     
     for (int i = 0; i < imageDic.count; i++) {
         
@@ -527,16 +513,21 @@
     
     __block NSInteger item = 0;
     __block NSInteger item1 = 0;
-
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
     
     for (int i = 0 ; i < urlArr.count; i++) {
-        
+                
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-
         
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imgUrl,urlArr[i]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@%@",imgUrl_API,urlArr[i],thumbnail_img]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             NSLog(@"");
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            
             item++;
             [hud hide:YES];
             
@@ -544,7 +535,7 @@
                 
                 for (int i = 0 ; i < urlArr.count; i++) {
                     
-                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imgUrl,urlArr[i]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@%@",imgUrl_API,urlArr[i],thumbnail_img]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                         NSLog(@"");
                     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                         item1++;
@@ -605,7 +596,6 @@
         [hud removeFromSuperview];
     }];
 
-    
     
     NSMutableArray *array = [[NSMutableArray alloc]init];
     
@@ -689,23 +679,25 @@
 
 - (void)leftBtnAction{
     
-    if (_isCopy||_isUpData) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:nil];
+//    if (_isCopy||_isUpData) {
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:nil];
+//
+//        [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
+//
+//    }else{
+//        
+//    }
 
-        [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:nil];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 
-    }else{
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
-
-    }
     
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     
     if (_isUpData) {
         self.navigationItem.title = @"更新完成";
@@ -719,7 +711,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     
 }

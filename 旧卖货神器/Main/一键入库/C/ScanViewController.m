@@ -46,7 +46,6 @@
     
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
-
     
     scanCollectionV=[[ScanCollectionView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth+40, kScreenHeight)];
     
@@ -66,6 +65,7 @@
     NSLog(@"%@",_currentIndexPath);
     
     [scanCollectionV scrollToItemAtIndexPath:_currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    
     [self.view addSubview:scanCollectionV];
     
     

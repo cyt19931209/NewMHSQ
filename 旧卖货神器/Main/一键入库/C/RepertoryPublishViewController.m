@@ -211,13 +211,13 @@
     ReleaseDetailsViewController *ReleaseDetailsVC = [[UIStoryboard storyboardWithName:@"AddNew" bundle:nil] instantiateViewControllerWithIdentifier:@"ReleaseDetailsViewController"];
     
     
-    ReleaseDetailsVC.share_id = _dataArr[indexPath.section][@"id"];
+    ReleaseDetailsVC.share_id = [NSString stringWithFormat:@"%@",_dataArr[indexPath.section][@"id"]];
+    
     
     [self.navigationController pushViewController:ReleaseDetailsVC animated:YES];
 
+    
 }
-
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
@@ -228,7 +228,6 @@
     
     return 0.00001f;
 }
-
 
 
 - (void)leftBtnAction{
@@ -247,7 +246,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
 

@@ -229,6 +229,12 @@
     NSDictionary *SYGData  = [defaults objectForKey:@"SYGData"];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+
+    
     [params setObject:SYGData[@"id"] forKey:@"uid"];
     
     [DataSeviece requestUrl:get_userinfohtml params:params success:^(id result) {
@@ -241,7 +247,7 @@
         
         if ([result[@"result"][@"data"][@"type"] isEqualToString:@"2"]) {
             
-            [_logoImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl,result[@"result"][@"data"][@"shopinfo"][@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx"]];
+            [_logoImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,result[@"result"][@"data"][@"shopinfo"][@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx1"]];
             
             _addressLabel.text = [NSString stringWithFormat:@"%@ %@ %@",result[@"result"][@"data"][@"shopinfo"][@"province_name"],result[@"result"][@"data"][@"shopinfo"][@"city_name"],result[@"result"][@"data"][@"shopinfo"][@"area_name"]];
             

@@ -20,8 +20,6 @@
 
 @property (nonatomic,copy) NSString *keyword;
 
-
-
 @end
 
 @implementation BrandChoiceViewController
@@ -341,7 +339,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
 
     
 

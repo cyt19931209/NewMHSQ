@@ -57,7 +57,6 @@
 @property (nonatomic,strong) UIImageView *selectfriendImageV;
 
 
-
 @end
 
 @implementation ReleaseDetailsViewController
@@ -66,14 +65,13 @@
     
     [super viewDidLoad];
     
-    
     self.tableView.tableFooterView = [[UIView alloc]init];
     
     _gradeId = @"";
     _expectedId = @"";
     _WDSortId = @"";
     _addressId = @"";
-    
+
     
     //遮罩视图
     bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
@@ -90,9 +88,6 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpDataNotification) name:@"UpDataNotification" object:nil];
-
-
-    
     
 
     self.navigationController.delegate = self;
@@ -180,86 +175,6 @@
 
     }
     
-    
-//    addView = [[UIView alloc]initWithFrame:CGRectMake(40, 250, kScreenWidth - 80, 136)];
-//    
-//    addView.backgroundColor = [RGBColor colorWithHexString:@"#ffffff"];
-//    
-//    addView.layer.cornerRadius = 4;
-//    
-//    addView.layer.masksToBounds = YES;
-//    
-//    addView.hidden = YES;
-//    
-//    [[UIApplication sharedApplication].keyWindow addSubview:addView];
-//    
-//    
-//    _selectfriendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    
-//    _selectfriendButton.frame = CGRectMake(0, 16, kScreenWidth - 80, 20);
-//    
-//    [_selectfriendButton setTitle:@"朋友圈文字" forState:UIControlStateNormal];
-//    
-//    [_selectfriendButton setTitleColor:[RGBColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
-//    
-//    _selectfriendButton.titleLabel.font = [UIFont systemFontOfSize:16];
-//    
-//    _selectfriendButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-//    
-//    _selectSPMSButton.selected = YES;
-//    
-//    [_selectfriendButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [addView addSubview:_selectfriendButton];
-//    
-//    
-//    _selectfriendImageV = [[UIImageView alloc]initWithFrame:CGRectMake(_selectfriendButton.width - 32, 4, 12, 12)];
-//    
-//    _selectfriendImageV.image = [UIImage imageNamed:@"chs11@2x"];
-//    
-//    [_selectfriendButton addSubview:_selectfriendImageV];
-//    
-//    
-//    
-//    _selectSPMSButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    
-//    _selectSPMSButton.frame = CGRectMake(0, 52, kScreenWidth - 80, 20);
-//    
-//    [_selectSPMSButton setTitle:@"商品描述" forState:UIControlStateNormal];
-//    
-//    [_selectSPMSButton setTitleColor:[RGBColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
-//    
-//    _selectSPMSButton.titleLabel.font = [UIFont systemFontOfSize:16];
-//    
-//    _selectSPMSButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-//    
-//    [_selectSPMSButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [addView addSubview:_selectSPMSButton];
-//    
-//    _selectSPMSImageV = [[UIImageView alloc]initWithFrame:CGRectMake(_selectSPMSButton.width - 32, 4, 12, 12)];
-//    
-//    _selectSPMSImageV.image = [UIImage imageNamed:@"nochs11@2x"];
-//    
-//    
-//    [_selectSPMSButton addSubview:_selectSPMSImageV];
-//    
-//    UIButton *tureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    
-//    tureButton.frame = CGRectMake(0, 100, kScreenWidth - 80, 20);
-//    
-//    [tureButton setTitle:@"发布" forState:UIControlStateNormal];
-//    
-//    [tureButton setTitleColor:[RGBColor colorWithHexString:@"#949dff"] forState:UIControlStateNormal];
-//    
-//    tureButton.titleLabel.font = [UIFont systemFontOfSize:18];
-//    
-//    [tureButton addTarget:self action:@selector(addAction) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [addView addSubview:tureButton];
-//
-    
-//    isSPMS = YES;
     
 }
 
@@ -396,9 +311,7 @@
 
 - (void)WXWBButtonAction:(UIButton*)bt{
     
-//    bgView.hidden = NO;
-//    addView.hidden = NO;
-//    
+
     if (bt.tag == 100) {
         
         isWXWB = YES;
@@ -410,18 +323,6 @@
         [self WBAction];
 
     }
-    
-//    if (isWXWB) {
-//        
-//        
-//    }else{
-//        
-//        
-//        
-//    }
-    
-
-    
     
 }
 
@@ -537,9 +438,10 @@
     
     bgView.hidden = YES;
     editView.hidden = YES;
+
+    editView = nil;
     
-    bgView = nil;
-    
+    [editView removeFromSuperview];
     
     
     
@@ -645,14 +547,6 @@
     
     pasteboard.string = _dataDic[@"goods_description"];
 
-//    if (isSPMS) {
-//        
-//        
-//    }else{
-//        
-//        pasteboard.string = SPMSStr;
-//    }
-
     
     NSMutableArray *array = [[NSMutableArray alloc]init];
     
@@ -703,6 +597,9 @@
     editView.hidden = YES;
     
     editView = nil;
+    
+    [editView removeFromSuperview];
+    
     
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -824,14 +721,6 @@
     
     message.text = NSLocalizedString(_dataDic[@"goods_description"], nil);
 
-//    if (isSPMS) {
-//        
-//        
-//    }else{
-//    
-//        message.text = SPMSStr;
-//    }
-    
     
     WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
     authRequest.redirectURI = kRedirectURI;
@@ -889,9 +778,8 @@
     
     bgView.hidden = YES;
     editView.hidden = YES;
-    
     editView = nil;
-    bgView = nil;
+    [editView removeFromSuperview];
     
     
 }
@@ -976,7 +864,6 @@
                 
                 _DLLabel.hidden = NO;
                 _agentPriceLabel.hidden = NO;
-                
             }
 
         }
@@ -1001,22 +888,8 @@
             
         }
         if (result[@"result"][@"data"][@"category_name"]) {
+            
             _LBLabel.text = result[@"result"][@"data"][@"category_name"];
-            
-        }
-        
-        if (result[@"result"][@"data"][@"size"]) {
-            _CCLabel.text = result[@"result"][@"data"][@"size"];
-            
-        }
-        
-        if (result[@"result"][@"data"][@"bagsize"]) {
-            _CCLabel.text = result[@"result"][@"data"][@"bagsize"];
-
-        }
-        
-        if (result[@"result"][@"data"][@"watchsize"]) {
-            _CCLabel.text = result[@"result"][@"data"][@"watchsize"];
             
         }
         
@@ -1101,8 +974,7 @@
             SPMSStr  = [NSString stringWithFormat:@"%@,  功能:%@",SPMSStr,[_dataDic[@"function_name"] stringByReplacingOccurrencesOfString:@"," withString:@"⌚️"]];
         }
 
-    
-   
+        
         
         if (![_gradeId isEqualToString:@""]&&_gradeId) {
             
@@ -1147,7 +1019,29 @@
             
         }
         
+        if (_dataDic[@"size"]) {
+            
+            _siez_xLabel.text = _dataDic[@"size"];
+            
+        }
+        
+        if (_dataDic[@"size_x"]) {
+            _siez_xLabel.text = _dataDic[@"size_x"];
+            
+        }
+        
+        if (_dataDic[@"size_y"]) {
+            
+            _size_yLabel.text = _dataDic[@"size_y"];
+            
+        }
+        if (_dataDic[@"size_z"]) {
+            _size_zLabel.text = _dataDic[@"size_z"];
+        }
 
+        
+        
+        
         NSLog(@"%@",SPMSStr);
         
         
@@ -1225,7 +1119,6 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *SYGData  = [defaults objectForKey:@"SYGData"];
 
-    
     //微店分类
     
     NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
@@ -1529,7 +1422,38 @@
         
     }else if (indexPath.row == 10){
         
-        if (![_CCLabel.text isEqualToString:@""]) {
+        if (![_siez_xLabel.text isEqualToString:@""]) {
+            
+            if ([_dataDic[@"category_pid"] isEqualToString:@"30"]) {
+                
+                _size_yLabel.hidden = NO;
+                _sizeLabel1.hidden = NO;
+                _size_zLabel.hidden = YES;
+                _sizeLabel2.hidden = NO;
+                _sizeLabel3.hidden = YES;
+                _sizeLabel1.text = @"mm  *";
+                _sizeLabel2.text = @"mm";
+                
+            }else if ([_dataDic[@"category_pid"] isEqualToString:@"1"]){
+                
+                _size_yLabel.hidden = NO;
+                _sizeLabel1.hidden = NO;
+                _size_zLabel.hidden = NO;
+                _sizeLabel2.hidden = NO;
+                _sizeLabel3.hidden = NO;
+                _sizeLabel1.text = @"cm  *";
+                _sizeLabel2.text = @"cm  *";
+                _sizeLabel3.text = @"cm";
+                
+            }else{
+                
+                _size_yLabel.hidden = YES;
+                _sizeLabel1.hidden = YES;
+                _size_zLabel.hidden = YES;
+                _sizeLabel2.hidden = YES;
+                _sizeLabel3.hidden = YES;
+            }
+
             return 44;
             
         }
@@ -1650,13 +1574,11 @@
                 NSLog(@"%@",error);
                 
             }];
-            
-            
+
             
         }else{
             
             NSLog(@"修改");
-            
             
             [self ModifyAction];
             
@@ -1686,9 +1608,9 @@
             [urlStr addObject:dic1[@"image_url"]];
             
             [imageArr addObject:@""];
-            
+
         }
-        
+
         __block NSInteger item1 = 0;
         
         for (int i = 0 ; i < urlStr.count; i++) {

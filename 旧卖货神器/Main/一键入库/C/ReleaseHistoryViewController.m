@@ -456,7 +456,6 @@
                 [searchButton setTitle:@"我的商品" forState:UIControlStateNormal];
                 
             }
-
             
             searchButton.titleLabel.font = [UIFont systemFontOfSize:14];
             
@@ -939,12 +938,11 @@
     
     bgView.hidden = YES;
     
-    searchTextFieldS.text = @"";
+//    searchTextFieldS.text = @"";
     
     NSArray *selectTitleArr = @[@"我的商品",@"同行商品",@"全部商品"];
 
     [searchButton setTitle:selectTitleArr[bt.tag - 200] forState:UIControlStateNormal];
-    
     
     if (bt.tag == 200) {
 
@@ -957,6 +955,26 @@
     
         _typeStr = @"all";
     }
+    
+    
+    if ([_typeStr isEqualToString:@"friend"]) {
+        page1 = 1;
+        
+        [self loadData1];
+        
+    }else if ([_typeStr isEqualToString:@"all"]){
+        
+        page2 = 1;
+        
+        [self loadData2];
+        
+    }else{
+        
+        page = 1;
+        
+        [self loadData];
+    }
+
     
     
 }
@@ -2478,7 +2496,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
     
@@ -2596,44 +2614,53 @@
         page = 1;
     
         [self loadData];
-        
     }
+
+    _keyword = [_keyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([_keyword isEqualToString:@""]) {
+
     
-    NSDictionary *SYGData = [defaults objectForKey:@"SYGData"];
+    }else{
     
-    NSMutableArray *selectTypeArr = [NSMutableArray arrayWithArray:[defaults objectForKey:[NSString stringWithFormat:@"%@Search",SYGData[@"id"]]]];
-    
-    BOOL isContains = NO;
-    
-    for (NSString *str in selectTypeArr) {
         
-        if ([_keyword isEqualToString:str]) {
-            isContains = YES;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSDictionary *SYGData = [defaults objectForKey:@"SYGData"];
+        
+        NSMutableArray *selectTypeArr = [NSMutableArray arrayWithArray:[defaults objectForKey:[NSString stringWithFormat:@"%@Search",SYGData[@"id"]]]];
+        
+        BOOL isContains = NO;
+        
+        for (NSString *str in selectTypeArr) {
+            
+            if ([_keyword isEqualToString:str]) {
+                isContains = YES;
+            }
+            
         }
         
-    }
-    
-    if (isContains) {
-        [selectTypeArr removeObject:_keyword];
-    }
-    
-    
-    [selectTypeArr insertObject:_keyword atIndex:0];
-    
-    if (selectTypeArr.count > 10) {
+        if (isContains) {
+            [selectTypeArr removeObject:_keyword];
+        }
         
-        [selectTypeArr removeLastObject];
+        
+        [selectTypeArr insertObject:_keyword atIndex:0];
+        
+        if (selectTypeArr.count > 10) {
+            
+            [selectTypeArr removeLastObject];
+        }
+        
+        
+        [defaults setObject:[selectTypeArr copy] forKey:[NSString stringWithFormat:@"%@Search",SYGData[@"id"]]];
+        
+        
+        [defaults synchronize];
+    
+    
     }
-    
-    
-    [defaults setObject:[selectTypeArr copy] forKey:[NSString stringWithFormat:@"%@Search",SYGData[@"id"]]];
-    
-    
-    [defaults synchronize];
-    
-    
+
     return YES;
     
 }

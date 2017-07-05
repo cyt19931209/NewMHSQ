@@ -17,4 +17,11 @@
           success:(void (^)(id result))successBlock
           failure:(void (^)(NSError *error))failBlock;
 
+
++(void)requestUrlNOHUD:(NSString *)url
+           params:(NSMutableDictionary *)param
+          success:(void (^)(id result))successBlock
+          failure:(void (^)(NSError *error))failBlock;
+
+
 @end

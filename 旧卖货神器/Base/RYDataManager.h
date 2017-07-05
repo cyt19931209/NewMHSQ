@@ -10,4 +10,7 @@
 
 @interface RYDataManager : NSObject
 
+
++ (void)RYTokenAndLogin;
+
 @end

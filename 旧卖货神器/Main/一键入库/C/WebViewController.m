@@ -38,9 +38,9 @@
         
         self.navigationItem.leftBarButtonItem = leftButtonItem;
         
-        
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlStr]]];
-
+        
+        
     }else{
     
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -49,8 +49,13 @@
         
         NSLog(@"%@",SYGData);
         
-        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/Api/Share/Oauth2/k1/%@/k2/%@/k4/vdian",WDUrl,SYGData[@"shop_id"],SYGData[@"id"]]]]];
-        NSLog(@"%@/Api/Share/Oauth2/k1/%@/k2/%@/k4/vdian",imgUrl,SYGData[@"shop_id"],SYGData[@"id"]);
+        NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+        
+        NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+        
+
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/Api/Share/Oauth2/k1/%@/k2/%@/k4/vdian",serviceData[@"WDUrl"],SYGData[@"shop_id"],SYGData[@"id"]]]]];
+        NSLog(@"%@/Api/Share/Oauth2/k1/%@/k2/%@/k4/vdian",imgUrl_API,SYGData[@"shop_id"],SYGData[@"id"]);
     
     }
     

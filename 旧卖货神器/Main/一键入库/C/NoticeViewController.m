@@ -16,6 +16,7 @@
 #import "JPUSHService.h"
 #import "PartnerDetailsViewController.h"
 #import "NewPartnerViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
 
 @interface NoticeViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>{
@@ -40,6 +41,8 @@
     
     [super viewDidLoad];
 
+    
+    
     page = 1;
 
     row = 1;
@@ -51,14 +54,14 @@
     _dataArr = [NSMutableArray array];
     
     //左边Item
-//    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    leftBtn.frame = CGRectMake(0, 0, 10, 19);
-//    [leftBtn setImage:[UIImage imageNamed:@"返回（20x38）"] forState:UIControlStateNormal];
-//    [leftBtn addTarget:self action:@selector(leftBtnAction) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem * leftButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
-//    
-//    self.navigationItem.leftBarButtonItem = leftButtonItem;
-//    
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame = CGRectMake(0, 0, 10, 19);
+    [leftBtn setImage:[UIImage imageNamed:@"Back Chevron"] forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(leftBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * leftButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+    
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
     _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - 49) style:UITableViewStylePlain];
     
     _myTableView.delegate = self;
@@ -68,6 +71,8 @@
     _myTableView.separatorStyle = NO;
     
     [self.view addSubview:_myTableView];
+    
+    _myTableView.backgroundColor = [UIColor clearColor];
     
     _myTableView.tableFooterView = [[UIView alloc]init];
     
@@ -84,6 +89,16 @@
         [self loadData];
     
     }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *RYUserId = serviceData[@"RYUserId"];
+
+    
+    [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:[NSString stringWithFormat:@"%@1",RYUserId]];
+
+    
     __weak NoticeViewController *weakSelf = self;
 
     //下拉刷新
@@ -140,6 +155,7 @@
         NSLog(@"%@",error);
         
     }];
+    
     
 }
 
@@ -446,10 +462,9 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
-    
 
 }
 
@@ -472,7 +487,6 @@
             UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发送成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             if ([result[@"result"][@"code"] isEqualToString:@"1"]) {
                 
-                
                 [alertV show];
                 
             }else{
@@ -487,17 +501,26 @@
             
             NSLog(@"%@",error);
         }];
-        
+
     }
     
 }
 
-
 - (void)leftBtnAction{
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-//    [self.navigationController popViewControllerAnimated:YES];
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *RYUserId = serviceData[@"RYUserId"];
+    
+
+    
+    [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:[NSString stringWithFormat:@"%@1",RYUserId]];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PushNumberNotification" object:nil];
+
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 

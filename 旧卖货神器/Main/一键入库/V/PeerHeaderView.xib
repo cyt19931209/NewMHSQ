@@ -158,9 +158,13 @@
             <connections>
                 <outlet property="DYButton" destination="xtt-rT-btB" id="cMi-oE-EFT"/>
                 <outlet property="DYLabel" destination="PwN-MK-UoG" id="XqI-LZ-g8H"/>
+                <outlet property="WXButton" destination="2ys-VD-4mm" id="WML-KK-JGS"/>
                 <outlet property="WXLabel" destination="Zu9-Mt-n69" id="eOr-oG-aKr"/>
+                <outlet property="chatButton" destination="43J-zY-JBK" id="i4E-Ls-TEh"/>
+                <outlet property="chatLabel" destination="z9R-2n-OLF" id="Xbi-IP-QMG"/>
                 <outlet property="imageV" destination="eVZ-Mi-ZWs" id="oo6-iM-2Us"/>
                 <outlet property="nameLabel" destination="uyn-22-gci" id="T07-Qd-O56"/>
+                <outlet property="phoneButton" destination="Bct-ew-wuq" id="5fr-td-z3Z"/>
                 <outlet property="phoneLabel" destination="CAR-2Z-3mF" id="JJ2-sh-Edb"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54"/>

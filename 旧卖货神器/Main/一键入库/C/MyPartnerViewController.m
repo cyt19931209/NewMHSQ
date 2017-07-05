@@ -543,7 +543,13 @@
     
     UIImageView *textImageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 62, 62)];
     
-    [textImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl,dic[@"logo"]]]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+    
+    [textImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,dic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx1"]];
     
     textImageV.layer.cornerRadius = 4;
     
@@ -693,25 +699,41 @@
                                            cropRect.size.width/fixWidth);
     }
 
-    
 }
-
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     
     if (metadataObjects.count>0) {
         
+        [session stopRunning];
+
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex : 0 ];
         //输出扫描字符串
         NSLog(@"%@",metadataObject.stringValue);
-        [session stopRunning];
+        
+        NSString *codestring = metadataObject.stringValue;
+
+        NSRange range = [codestring rangeOfString:@"/"];
+        
+        while (range.location != NSNotFound) {
+            
+            codestring = [codestring substringFromIndex:range.location + 1];
+            
+            range = [codestring rangeOfString:@"/"];
+            
+            NSLog(@"%@",codestring);
+            
+        }
+
+        
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSDictionary *SYGData  = [defaults objectForKey:@"SYGData"];
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         [params setObject:SYGData[@"id"] forKey:@"uid"];
         
-        [params setObject:metadataObject.stringValue forKey:@"qrcode_str"];
+        
+        [params setObject:codestring forKey:@"qrcode_str"];
         
         [DataSeviece requestUrl:search_friendhtml params:params success:^(id result) {
             
@@ -942,16 +964,15 @@
         NSLog(@"%@",result);
         
         if (page == 1) {
-            
+
             [_dataArr removeAllObjects];
         }
         
 
         for (NSDictionary *dic in result[@"result"][@"data"][@"item"]) {
             
-        
-            [_dataArr addObject:dic];
             
+            [_dataArr addObject:dic];
         }
         
 //        
@@ -1154,8 +1175,14 @@
 
     UILabel *label1 = [cell.contentView viewWithTag:104];
 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [imageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl,_dataArr[indexPath.row][@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx1"]];
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+
+    
+    [imageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,_dataArr[indexPath.row][@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx1"]];
     
     label.text = _dataArr[indexPath.row][@"shop_name"];
     
@@ -1299,7 +1326,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     
     [self.navigationController.navigationBar setShadowImage:nil];

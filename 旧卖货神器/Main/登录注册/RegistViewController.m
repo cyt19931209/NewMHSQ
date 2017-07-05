@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "OnePublishingViewController.h"
 #import "BaseTabBarController.h"
+#import "RYDataManager.h"
 
 @interface RegistViewController ()<UITextFieldDelegate>{
 
@@ -357,7 +358,9 @@
             
             [UIApplication sharedApplication].keyWindow.rootViewController = baseTabBarC;
             
-            
+
+            [RYDataManager RYTokenAndLogin];
+
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentNotification" object:nil];
             
             

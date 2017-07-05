@@ -22,15 +22,7 @@
 
     _dic = dic;
     
-    
-    
     _scrollView.hidden = NO;
-
-    //下划线
-    
-    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-    
-    
     
     row = 0;
     
@@ -104,7 +96,6 @@
     BOOL isADMZY = NO;
     BOOL isADMSJ = NO;
     BOOL isJA = NO;
-    BOOL isKKH = NO;
 
     
     for (NSString *str in _dic[@"unstatus"]) {
@@ -315,9 +306,9 @@
     }else{
         _JABLeft.constant = 20;
     }
-
     
     NSArray *typeArr = @[@"ponhu",@"aidingmao",@"vdian",@"liequ",@"newshang",@"shopuu",@"xiaohongshu",@"aidingmaopro",@"aidingmaomer",@"jiuai"];
+
     
     NSMutableArray *typeMutablbArr = [NSMutableArray array];
     
@@ -327,6 +318,7 @@
             
             [typeMutablbArr addObject:str];
         }
+
     }
 
     if (typeMutablbArr.count == 0||[_is_delete isEqualToString:@"1"]) {
@@ -368,9 +360,8 @@
         _MoreButton.hidden = YES;
         
         [_WXButton setImage:[UIImage imageNamed:@"删除"] forState:UIControlStateNormal];
-
         [_WBButton setImage:[UIImage imageNamed:@"恢复"] forState:UIControlStateNormal];
-        
+
     }
     
     if ([_dic[@"agency_price"] isEqualToString:@"***"]) {
@@ -388,9 +379,10 @@
     _agentPriceTextField.delegate = self;
 
     
-    
     if ([_dic[@"is_friend_goods"] isEqualToString:@"1"]) {
 
+        _chatButton.hidden = NO;
+        
         _shopNameLabel.hidden = NO;
         
         _shopAdressLabel.hidden = NO;
@@ -417,7 +409,14 @@
         
         _logoImageV.layer.masksToBounds = YES;
         
-        [_logoImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl,_dic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx1"]];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+        
+        NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+
+        
+        [_logoImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,_dic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"mrtx1"]];
         
         _shopNameLabel.text = _dic[@"shop_name"];
         
@@ -451,12 +450,16 @@
             
         }
         
-        _agentPriceTextField.text = [NSString stringWithFormat:@"%ld",[_dic1[@"agency_price"] integerValue]];
+        _agentPriceTextField.attributedText = nil;
+        
+        _agentPriceTextField.text = [NSString stringWithFormat:@"%ld",[_dic[@"agency_price"] integerValue]];
 
         _agentPriceTextField.userInteractionEnabled = NO;
 
     }else{
     
+        _chatButton.hidden = YES;
+
         _MoreButton.hidden = NO;
         
         _shopNameLabel.hidden = YES;
@@ -479,11 +482,12 @@
         
         _image3Top.constant = 2;
         
+        //下划线
+        NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
         
         NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%ld",[_dic[@"agency_price"] integerValue]] attributes:attribtDic];
         
         _agentPriceTextField.attributedText = attribtStr;
-        
         
         if (_isFriend) {
             
@@ -491,12 +495,11 @@
 
             _MoreButton.hidden = YES;
 
-            _agentPriceTextField.text = [NSString stringWithFormat:@"%ld",[_dic1[@"agency_price"] integerValue]];
+            _agentPriceTextField.text = [NSString stringWithFormat:@"%ld",[_dic[@"agency_price"] integerValue]];
             
             _agentPriceTextField.userInteractionEnabled = NO;
 
         }
-        
         
     }
     
@@ -612,7 +615,6 @@
 
 
 - (void)WXWBButtonAction:(NSString*)str{
-    
     
     
     if ([str isEqualToString:@"1"]) {
@@ -1097,19 +1099,6 @@
         
     }
 
-//    if (_isFriend) {
-//        
-//        for (NSDictionary *dic1 in _dic1[@"img"]) {
-//            
-//            [urlStr addObject:dic1[@"image_url"]];
-//            
-//            [imageArr addObject:@""];
-//            
-//        }
-//        
-//    }else{
-//        
-//    }
     
     NSLog(@"%@",urlStr);
     
@@ -1120,9 +1109,10 @@
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:urlStr[i]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",urlStr[i],thumbnail_img]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
             NSLog(@"");
+            
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             item1++;
             [hud hide:YES];
@@ -1133,7 +1123,7 @@
                 
                 for (int j = 0 ; j < urlStr.count; j++) {
                     
-                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:urlStr[j]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",urlStr[j],thumbnail_img]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                         NSLog(@"");
                     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                         
@@ -1179,13 +1169,6 @@
     
     [params setObject:_dic[@"id"] forKey:@"goods_id"];
 
-//    if (_isFriend) {
-//        [params setObject:_dic1[@"id"] forKey:@"goods_id"];
-//        
-//    }else{
-//        
-//    }
-//    
     
     [params setObject:@"weibo" forKey:@"type"];
     
@@ -1206,20 +1189,6 @@
         
         [imgStr addObject:@""];
     }
-//    if (_isFriend) {
-//        for (NSDictionary *dic1 in _dic1[@"img"]) {
-//            
-//            [urlStr addObject:dic1[@"image_url"]];
-//            
-//            [imgStr addObject:@""];
-//        }
-//        
-//        
-//    }else{
-//      
-//        
-//        
-//    }
     
     __block NSInteger item1 = 0;
     
@@ -1277,15 +1246,6 @@
     [params setObject:SYGData[@"id"] forKey:@"uid"];
     
     [params setObject:_dic[@"id"] forKey:@"goods_id"];
-
-//    if (_isFriend) {
-//        
-//        [params setObject:_dic1[@"id"] forKey:@"goods_id"];
-//
-//    }else{
-//        
-//
-//    }
     
     [params setObject:@"wechat" forKey:@"type"];
     
@@ -1325,7 +1285,7 @@
         SharedItem *item = [[SharedItem alloc] initWithData:imagerang andFile:shareobj];
         
         [array addObject:item];
-        
+
     }
     
     NSLog(@"%@",array);
@@ -1397,7 +1357,6 @@
                 
                 
                 if ([result[@"result"][@"data"][@"status"] isEqualToString:@"enable"]) {
-                    
                     
                     alertV2 = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否确定恢复"delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                     
@@ -1540,23 +1499,12 @@
     height = 0;
 
     
-    if (_isFriend||[_dic[@"is_friend_goods"] isEqualToString:@"1"]) {
+    if ([_dic[@"is_friend_goods"] isEqualToString:@"1"]) {
         
         height = 58;
 
     }
     
-//    if (_isFriend) {
-//        
-//        for (NSDictionary *dic1 in _dic1[@"img"]) {
-//            
-//            [imaArr addObject:dic1[@"image_url"]];
-//        }
-//        
-//        height = 58;
-//    }else{
-//        }
-//    
     
     NSMutableArray *thumbnailArr = [NSMutableArray array];
     
@@ -1584,7 +1532,7 @@
     
     scanVC.share_id = _dic[@"id"];
     
-    if ([_dic[@"is_friend_goods"] isEqualToString:@"1"]) {
+    if ([_dic[@"is_friend_goods"] isEqualToString:@"1"]||_isFriend) {
 
         scanVC.isFriend = YES;
 
@@ -1593,15 +1541,7 @@
         scanVC.isFriend = NO;
     }
 
-    
-//
-//    if (_isFriend) {
-//        scanVC.share_id = _dic[@"id"];
-//
-//    }else{
-//
-//    }
-    
+        
     scanVC.thumbnailArr = thumbnailArr;
     
     
@@ -1992,7 +1932,6 @@
 
     [params setObject:editTextView.text forKey:@"friend_describe"];
 
-    
     //
     //    [params setObject:@{@"1":@{@"attribute_id":_dic[@"attribute_id"],@"attribute_value":editTextView.text}} forKey:@"attribute_list"];
     //
@@ -2009,7 +1948,42 @@
             
             NSDictionary *dic = @{@"2":editTextView.text,@"1":[NSString stringWithFormat:@"%ld",(long)_index]};
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TextViewNotification" object:dic];
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            
+            [params setObject:SYGData[@"id"] forKey:@"uid"];
+            
+            [DataSeviece requestUrl:get_shop_settinghtml params:params success:^(id result) {
+                
+                NSLog(@"%@",result);
+                
+                if ([result[@"result"][@"data"] isKindOfClass:[NSDictionary class]]) {
+                    
+                    
+                    if ([result[@"result"][@"data"][@"stick_after_publish"] integerValue] == 1) {
+
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:dic];
+
+                    }else{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"TextViewNotification" object:dic];
+                        
+                    }
+                    
+                }else{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TextViewNotification" object:dic];
+
+                }
+                
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                
+            }];
+
+            
+            
             
         }else{
             
@@ -2033,10 +2007,13 @@
     
     bgView.hidden = YES;
 
+    RYView.hidden = YES;
+    
     addView.hidden = YES;
     editView = nil;
     bgView = nil;
     addView = nil;
+    RYView = nil;
     
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -2142,7 +2119,6 @@
     
     NSLog(@"%@",params);
     
-    
     [DataSeviece requestUrl:update_goodshtml params:params success:^(id result) {
         
         NSLog(@"%@ %@",result[@"result"][@"msg"],result);
@@ -2150,11 +2126,43 @@
         if ([result[@"result"][@"code"] isEqualToString:@"1"]) {
             
             alert.message = @"保存成功";
+            
             [alert show];
             
             NSDictionary *dic = @{@"2":_agentPriceTextField.text,@"1":[NSString stringWithFormat:@"%ld",(long)_index]};
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"DLTextViewNotification" object:dic];
+            
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            
+            [params setObject:SYGData[@"id"] forKey:@"uid"];
+            
+            [DataSeviece requestUrl:get_shop_settinghtml params:params success:^(id result) {
+                
+                NSLog(@"%@",result);
+                
+                if ([result[@"result"][@"data"] isKindOfClass:[NSDictionary class]]) {
+
+                    if ([result[@"result"][@"data"][@"stick_after_publish"] integerValue] == 1) {
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:dic];
+                        
+                    }else{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"DLTextViewNotification" object:dic];
+                        
+                    }
+                }else{
+                
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"DLTextViewNotification" object:dic];
+                }
+                
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                
+            }];
+            
             
         }else{
             
@@ -2168,6 +2176,82 @@
 
     
     return YES;
+}
+//聊天
+- (IBAction)chatAction:(id)sender {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *SYGData  = [defaults objectForKey:@"SYGData"];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    [params setObject:SYGData[@"id"] forKey:@"uid"];
+    
+    [params setObject:_dic[@"shop_id"] forKey:@"shop_id"];
+    
+    [DataSeviece requestUrl:get_shop_user_listhtml params:params success:^(id result) {
+        
+        NSLog(@"%@ %@",result,result[@"result"][@"msg"]);
+        
+        if ([result[@"result"][@"code"] isEqualToString:@"1"]) {
+            
+            NSArray *arr = result[@"result"][@"data"][@"user"];
+            
+            //遮罩视图
+            bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+            bgView.backgroundColor = [RGBColor colorWithHexString:@"#2d2d2d"];
+            bgView.alpha = .4;
+            [[UIApplication sharedApplication].keyWindow addSubview:bgView];
+            
+            UIButton *bgButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            bgButton.frame = bgView.frame;
+            [bgButton addTarget:self action:@selector(bgButtonAction) forControlEvents:UIControlEventTouchUpInside];
+            
+            [bgView addSubview:bgButton];
+            
+            RYView = [[RYSelectListView alloc]initWithFrame:CGRectMake(18, (kScreenHeight - (arr.count + 1) * 50)/2, kScreenWidth - 36, (arr.count + 1) * 50)];
+            
+            RYView.dataDic = result[@"result"][@"data"];
+            
+            RYView.backBlock = ^(NSInteger index) {
+                
+                [self bgButtonAction];
+                
+                NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+                
+                NSString *RYUserId = serviceData[@"RYUserId"];
+
+                //新建一个聊天会话View Controller对象,建议这样初始化
+                BaseChatViewController *chat = [[BaseChatViewController alloc] initWithConversationType:ConversationType_PRIVATE
+                                                                                               targetId:[NSString stringWithFormat:@"%@%@",RYUserId,result[@"result"][@"data"][@"user"][index][@"id"]]];
+                
+                chat.hidesBottomBarWhenPushed = YES;
+                
+                //设置会话的类型，如单聊、讨论组、群聊、聊天室、客服、公众服务会话等
+                //            chat.conversationType = ConversationType_PRIVATE;
+                //            //设置会话的目标会话ID。（单聊、客服、公众服务会话为对方的ID，讨论组、群聊、聊天室为会话的ID）
+                //            chat.targetId = @"targetIdYouWillChatIn";
+                //
+                //设置聊天会话界面要显示的标题
+                
+                chat.title = result[@"result"][@"data"][@"user"][index][@"nickname"];
+                //显示聊天会话界面
+                [self.viewController.navigationController pushViewController:chat animated:YES];
+                
+            };
+            
+            [[UIApplication sharedApplication].keyWindow addSubview:RYView];
+            
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+    }];
+
 }
 
 @end

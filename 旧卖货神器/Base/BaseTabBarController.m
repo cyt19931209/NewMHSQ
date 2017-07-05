@@ -12,14 +12,15 @@
 #import "SettingViewController.h"
 #import "HomeViewController.h"
 #import "GoodsViewController.h"
+#import "ChatListViewController.h"
 
-
-@interface BaseTabBarController ()
+@interface BaseTabBarController ()<UITabBarDelegate>
 
 @property (nonatomic,strong) UIView *redView;
 
 @property (nonatomic,strong) UIImageView *selectImageV;
 
+@property (nonatomic,strong) UILabel *numberLabel;
 
 @end
 
@@ -28,37 +29,162 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectTabBarNotification:) name:@"selectTabBarNotification" object:nil];
-//
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PushNumberNotification) name:@"PushNumberNotification" object:nil];
+
     /**
      *  1.加载子控制器
      */
-
+    
+//    [self removeTaBarButton];
+    
     [self creactSubC];
     
-    [self creactTabBar];
+//    [self creactTabBar];
+    
 }
 
 - (void)creactSubC{
     
+    self.tabBar.barTintColor = [UIColor whiteColor];
+    
+    self.tabBar.tintColor=[RGBColor colorWithHexString:@"949dff"];;
+
+    
+    NSArray *imgArr = @[
+                        @"home",
+                        @"huoyuan",
+                        @"xiaoxi",
+                        @"wode",
+                        ];
+    
+    NSArray *selectImgArr = @[
+                              @"homexz",
+                              @"huoyuanxz",
+                              @"xiaoxixz",
+                              @"wodexz",
+                              ];
+
+    
     UINavigationController *sellingGoodsVC = [[UINavigationController alloc]initWithRootViewController:[[HomeViewController alloc]init]];
     
-    UINavigationController *supplyGoodsVC = [[UINavigationController alloc]initWithRootViewController:[[GoodsViewController alloc]init]];
-
-    UINavigationController *informationVC = [[UINavigationController alloc]initWithRootViewController:[[NoticeViewController alloc]init]];
+    [sellingGoodsVC.tabBarItem setImage:[UIImage imageNamed:imgArr[0]]];
     
+    [sellingGoodsVC.tabBarItem setSelectedImage:[UIImage imageNamed:selectImgArr[0]]];
+    
+    sellingGoodsVC.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    
+    UINavigationController *supplyGoodsVC = [[UINavigationController alloc]initWithRootViewController:[[GoodsViewController alloc]init]];
+    
+    [supplyGoodsVC.tabBarItem setImage:[UIImage imageNamed:imgArr[1]]];
+    
+    [supplyGoodsVC.tabBarItem setSelectedImage:[UIImage imageNamed:selectImgArr[1]]];
+
+    supplyGoodsVC.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+
+    
+    UINavigationController *informationVC = [[UINavigationController alloc]initWithRootViewController:[[ChatListViewController alloc]init]];
+    
+    [informationVC.tabBarItem setImage:[UIImage imageNamed:imgArr[2]]];
+    
+    [informationVC.tabBarItem setSelectedImage:[UIImage imageNamed:selectImgArr[2]]];
+    
+    informationVC.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+
+
     SettingViewController *settingVC = [[UIStoryboard storyboardWithName:@"AddNew" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingViewController"];
     
     UINavigationController *myVC = [[UINavigationController alloc]initWithRootViewController:settingVC];
     
+    [myVC.tabBarItem setImage:[UIImage imageNamed:imgArr[3]]];
+    
+    [myVC.tabBarItem setSelectedImage:[UIImage imageNamed:selectImgArr[3]]];
+
+    myVC.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+
     NSArray *viewC = @[sellingGoodsVC,supplyGoodsVC,informationVC,myVC];
 
     self.viewControllers = viewC;
     
+    
+    _redView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/4/2 + 5, 10, 5, 5)];
+    
+    _redView.tag = 500;
+    
+    _redView.backgroundColor = [UIColor redColor];
+    
+    _redView.layer.cornerRadius = 2.5;
+    
+    _redView.layer.masksToBounds = YES;
+    
+    _redView.hidden = YES;
+    
+    [self.tabBar addSubview:_redView];
+    
+    _numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/4/2 + 6 + kScreenWidth/4 * 2, 5, 14, 14)];
+    
+    _numberLabel.backgroundColor = [RGBColor colorWithHexString:@"#F5554A"];
+    
+    _numberLabel.textColor = [RGBColor colorWithHexString:@"#ffffff"];
+    
+    _numberLabel.font = [UIFont systemFontOfSize:12];
+    
+    _numberLabel.textAlignment = NSTextAlignmentCenter;
+    
+    _numberLabel.layer.cornerRadius = 7;
+    
+    _numberLabel.layer.masksToBounds = YES;
+    
+    _numberLabel.hidden = YES;
+    
+    [self.tabBar addSubview:_numberLabel];
+
+}
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex{
+
+    [super setSelectedIndex:selectedIndex];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSDictionary *SYGData  = [defaults objectForKey:@"SYGData"];
+    
+    if (SYGData[@"id"]) {
+        
+        [self loadData];
+    }
+    
+
+    
+    
+//    NSArray *imgArr = @[
+//                        @"home",
+//                        @"huoyuan",
+//                        @"xiaoxi",
+//                        @"wode",
+//                        ];
+//    
+//    NSArray *selectImgArr = @[
+//                              @"homexz",
+//                              @"huoyuanxz",
+//                              @"xiaoxixz",
+//                              @"wodexz",
+//                              ];
+//
+//    UIImageView *imageV = [self.tabBar viewWithTag:1100 + selectedIndex];
+//
+//    if (imageV != _selectImageV) {
+//        
+//        _selectImageV.image = [UIImage imageNamed:imgArr[_selectImageV.tag-1100]];
+//
+//        imageV.image = [UIImage imageNamed:selectImgArr[imageV.tag-1100]];
+//        
+//        _selectImageV = imageV;
+//    }
+
+
 }
 
 - (void)creactTabBar{
-    
     
     //设置背景
     UIImageView * tabaImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 49)];
@@ -96,6 +222,7 @@
         [self.tabBar addSubview:imageV];
         if (i == 0) {
             _selectImageV = imageV;
+            
             imageV.image = [UIImage imageNamed:@"homexz"];
             
             _redView = [[UIView alloc]initWithFrame:CGRectMake(button.width/2 + 5, 10, 5, 5)];
@@ -108,10 +235,18 @@
             _redView.layer.masksToBounds = YES;
             
             _redView.hidden = YES;
-            
+
             [button addSubview:_redView];
 
         }
+        
+        if (i == 2) {
+            
+            
+            [self.tabBar addSubview:_numberLabel];
+
+        }
+        
     }
 
 }
@@ -143,13 +278,19 @@
 
     UIImageView *imageV = [self.tabBar viewWithTag:bt.tag+100];
     
-    if (imageV != _selectImageV) {
-        
-        imageV.image = [UIImage imageNamed:selectImgArr[bt.tag-1000]];
-        _selectImageV.image = [UIImage imageNamed:imgArr[_selectImageV.tag-1100]];
-        _selectImageV = imageV;
+    
+    NSLog(@"%ld %ld %ld",bt.tag,_selectImageV.tag,imageV.tag);
 
-    }
+//    if (imageV != _selectImageV) {
+    
+    _selectImageV.image = [UIImage imageNamed:imgArr[_selectImageV.tag-1100]];
+
+    imageV.image = [UIImage imageNamed:selectImgArr[bt.tag-1000]];
+    
+    _selectImageV = imageV;
+    
+    
+//    }
     
     [self loadData];
 
@@ -180,7 +321,6 @@
                 _redView.hidden = NO;
             }
             
-
         }
         
     } failure:^(NSError *error) {
@@ -189,6 +329,68 @@
         
     }];
 
+    int number = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
+    
+    NSLog(@"%d",number);
+    
+    if ( number == 0 || number == 0) {
+        
+        _numberLabel.hidden = YES;
+
+    }else{
+
+        
+        _numberLabel.hidden = NO;
+        
+        _numberLabel.text = [NSString stringWithFormat:@"%d",number];
+
+        if (number > 9) {
+            
+            _numberLabel.width = 20;
+            
+        }else if (number > 99){
+        
+            _numberLabel.width = 30;
+            
+            _numberLabel.text = @"99+";
+            
+        }
+        
+    }
+    
+
+}
+
+- (void)PushNumberNotification{
+
+    int number = [[RCIMClient sharedRCIMClient] getTotalUnreadCount];
+    
+    NSLog(@"%d",number);
+    
+    if ( number < 0 || number == 0) {
+        
+        _numberLabel.hidden = YES;
+        
+    }else{
+        
+
+        _numberLabel.hidden = NO;
+        
+        _numberLabel.text = [NSString stringWithFormat:@"%d",number];
+        
+        if (number > 9) {
+            
+            _numberLabel.width = 20;
+            
+        }else if (number > 99){
+            
+            _numberLabel.width = 30;
+            
+            _numberLabel.text = @"99+";
+            
+        }
+        
+    }
 
 }
 
@@ -196,8 +398,7 @@
     
     [super viewWillAppear:animated];
     
-    
-    [self removeTaBarButton];
+//    [self removeTaBarButton];
 
 }
 
@@ -245,9 +446,28 @@
 //
 //}
 //
-//- (void)dealloc{
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    
-//}
+
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    
+    [self loadData];
+    
+    
+   UITabBarItem *bar = tabBar.items[self.selectedIndex];
+    
+    
+    if (bar == item &&item == tabBar.items[0]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataTabBarNotification" object:nil];
+        
+    }
+    
+    
+}
+
+- (void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
 @end

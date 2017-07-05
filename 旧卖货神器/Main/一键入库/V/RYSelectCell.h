@@ -10,4 +10,14 @@
 
 @interface RYSelectCell : UITableViewCell
 
+
+
+@property (nonatomic,strong) NSDictionary *dic;
+
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *stateImageV;
+@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;
+
 @end

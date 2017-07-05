@@ -551,9 +551,9 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulF-MW-Vwl">
-                        <rect key="frame" x="58" y="20" width="234" height="16"/>
+                        <rect key="frame" x="58" y="20" width="100" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="234" id="CeV-r5-oFY"/>
+                            <constraint firstAttribute="width" constant="100" id="CeV-r5-oFY"/>
                             <constraint firstAttribute="height" constant="16" id="qbz-rS-Fn0"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -572,22 +572,37 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9e-Ag-oMu">
-                        <rect key="frame" x="10" y="20" width="185" height="38"/>
+                        <rect key="frame" x="10" y="20" width="152" height="38"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="38" id="RCx-HW-Hp1"/>
-                            <constraint firstAttribute="width" constant="185" id="sET-yA-Aj0"/>
+                            <constraint firstAttribute="width" constant="152" id="sET-yA-Aj0"/>
                         </constraints>
                         <connections>
                             <action selector="logoAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bf7-6m-2MQ"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyT-jP-CJx">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyT-jP-CJx">
                         <rect key="frame" x="100" y="40" width="150" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="VSz-CE-Kh4"/>
+                            <constraint firstAttribute="height" constant="16" id="uWd-Yy-LQh"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gte-Cf-Ebh">
+                        <rect key="frame" x="170" y="17" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="RL0-op-71s"/>
+                            <constraint firstAttribute="height" constant="22" id="eMX-gh-Lp9"/>
+                        </constraints>
+                        <state key="normal" image="talk.png"/>
+                        <state key="selected" image="addhqs.png"/>
+                        <connections>
+                            <action selector="chatAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="i2a-70-OHQ"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="t4N-6E-suI" firstAttribute="leading" secondItem="pC8-ZZ-7xO" secondAttribute="trailing" constant="5" id="0YO-fW-3eo"/>
@@ -620,6 +635,7 @@
                     <constraint firstItem="4qO-ls-NtP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="L9N-71-ggI"/>
                     <constraint firstItem="SZ3-Lq-Jrz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="351" id="LRl-3a-RAl"/>
                     <constraint firstItem="t4N-6E-suI" firstAttribute="width" secondItem="pC8-ZZ-7xO" secondAttribute="width" id="Le6-DL-pzX"/>
+                    <constraint firstItem="gte-Cf-Ebh" firstAttribute="leading" secondItem="ulF-MW-Vwl" secondAttribute="trailing" constant="12" id="NLf-PY-cTp"/>
                     <constraint firstItem="sku-85-MOq" firstAttribute="width" secondItem="pC8-ZZ-7xO" secondAttribute="width" id="Ns7-t1-giY"/>
                     <constraint firstItem="t4N-6E-suI" firstAttribute="height" secondItem="pC8-ZZ-7xO" secondAttribute="height" id="P8f-mu-LKI"/>
                     <constraint firstItem="8oM-TJ-2gt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="P91-iq-cP5"/>
@@ -632,10 +648,12 @@
                     <constraint firstAttribute="bottomMargin" secondItem="aYN-co-iHJ" secondAttribute="bottom" constant="64.5" id="U4N-2F-Tbf"/>
                     <constraint firstItem="7QM-CI-5rQ" firstAttribute="width" secondItem="pC8-ZZ-7xO" secondAttribute="width" id="UCe-wd-vU4"/>
                     <constraint firstItem="cBl-Jr-NJD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="UJk-0l-jFF"/>
+                    <constraint firstItem="EyT-jP-CJx" firstAttribute="leading" secondItem="nHn-uj-IBl" secondAttribute="trailing" constant="9" id="UUo-QV-s6d"/>
                     <constraint firstItem="53w-95-nd3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="V1q-YO-n7x"/>
                     <constraint firstItem="28e-kZ-3B2" firstAttribute="leading" secondItem="boi-o0-bsa" secondAttribute="trailing" constant="-30" id="W9b-nI-fnv"/>
                     <constraint firstAttribute="trailingMargin" secondItem="3Nf-aL-vdj" secondAttribute="trailing" constant="6" id="X8O-i2-tUf"/>
                     <constraint firstItem="0xX-nl-RTb" firstAttribute="height" secondItem="pC8-ZZ-7xO" secondAttribute="height" id="X9K-hC-Fhf"/>
+                    <constraint firstItem="EyT-jP-CJx" firstAttribute="top" secondItem="ulF-MW-Vwl" secondAttribute="bottom" constant="4" id="Xq7-Dx-sCe"/>
                     <constraint firstItem="sku-85-MOq" firstAttribute="leading" secondItem="cBl-Jr-NJD" secondAttribute="trailing" constant="5" id="Yni-Xy-aFX"/>
                     <constraint firstItem="YAI-0k-DEK" firstAttribute="top" secondItem="2B7-25-Rgy" secondAttribute="bottom" constant="37.5" id="ZXk-Rn-PaU"/>
                     <constraint firstItem="cBl-Jr-NJD" firstAttribute="height" secondItem="pC8-ZZ-7xO" secondAttribute="height" id="Zad-dd-WSA"/>
@@ -656,6 +674,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="2B7-25-Rgy" secondAttribute="trailing" constant="-8" id="hRE-4u-2DH"/>
                     <constraint firstItem="58i-UX-9tq" firstAttribute="top" secondItem="KR4-mL-R2K" secondAttribute="bottom" constant="4" id="jXY-MC-9iN"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Ml7-CE-mAT" secondAttribute="trailing" constant="4" id="kJ2-GP-RLM"/>
+                    <constraint firstItem="gte-Cf-Ebh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="kYq-Mo-cuz"/>
                     <constraint firstItem="aYN-co-iHJ" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="l5C-ZD-ww0"/>
                     <constraint firstItem="Oqw-10-hVD" firstAttribute="leading" secondItem="28e-kZ-3B2" secondAttribute="trailing" constant="-10" id="nKy-c6-dkq"/>
                     <constraint firstItem="o1M-Gl-d0n" firstAttribute="height" secondItem="pC8-ZZ-7xO" secondAttribute="height" id="nhc-rU-qwq"/>
@@ -717,6 +736,7 @@
                 <outlet property="ZDLabel" destination="Fda-ay-SfB" id="c2W-xM-6Qo"/>
                 <outlet property="agentPriceTextField" destination="Oqw-10-hVD" id="TMZ-zQ-WeR"/>
                 <outlet property="button1" destination="KR4-mL-R2K" id="WCg-2n-nls"/>
+                <outlet property="chatButton" destination="gte-Cf-Ebh" id="jjw-lH-ixC"/>
                 <outlet property="dayLabel" destination="3Nf-aL-vdj" id="tad-KR-ihJ"/>
                 <outlet property="editTextButton" destination="7sh-am-2ZN" id="rkE-rc-w5d"/>
                 <outlet property="goods_descriptionLabel" destination="4qO-ls-NtP" id="BBT-KD-IIW"/>
@@ -748,10 +768,12 @@
     <resources>
         <image name="Group 2 Copy 2.png" width="68" height="68"/>
         <image name="Group 2 Copy.png" width="68" height="68"/>
+        <image name="addhqs.png" width="21" height="24"/>
         <image name="bianji.png" width="14" height="14"/>
         <image name="jiuai34.png" width="34" height="34"/>
         <image name="jtyh.png" width="23" height="13"/>
         <image name="more.png" width="68" height="68"/>
+        <image name="talk.png" width="22" height="21"/>
         <image name="xhs34.png" width="34" height="34"/>
         <image name="一起发1.png" width="34" height="34"/>
         <image name="少铺34.png" width="34" height="34"/>

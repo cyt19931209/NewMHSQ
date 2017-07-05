@@ -17,6 +17,7 @@
 #import "PartnerDetailsViewController.h"
 #import "HotFriendCell.h"
 #import "OneButtonPublishingViewController.h"
+#import "UIButton+Graphic.h"
 
 @interface GoodsViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>{
 
@@ -34,6 +35,7 @@
     UISearchBar *searchBar;
     
     NSString *keyword;
+    
     
     
 
@@ -58,6 +60,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
+    
     keyword = @"";
     
     page = 1;
@@ -69,6 +73,11 @@
     _dataArr1 = [NSMutableArray array];
     
     self.view.backgroundColor = [RGBColor colorWithHexString:@"f1f2fa"];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FollowNotification) name:@"FollowNotification" object:nil];
+    
     
     //隐藏键盘
     UITapGestureRecognizer* singleRecognizer= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleAction)];;
@@ -115,24 +124,25 @@
 - (void)singleAction{
     
     [searchBar resignFirstResponder];
-    
 }
-
 
 //UI
 - (void)creatUI{
     
     NSArray *titleArr = @[@"货源",@"热门同行"];
     
-    _selectV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 2)];
+    NSArray *imageArr = @[@"ic-huo",@"ic-hot"];
     
-    _selectV.backgroundColor = [RGBColor colorWithHexString:@"ffffff"];
+    
+    _selectV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 50, 2)];
+    
+    _selectV.backgroundColor = [RGBColor colorWithHexString:@"949DFF"];
     
     for (int i = 0; i < 2; i++) {
         
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        button.frame = CGRectMake(i * kScreenWidth/2, 0, kScreenWidth/2, 39);
+        button.frame = CGRectMake(i * kScreenWidth/2, 0, kScreenWidth/2, 49);
         
         [button setTitle:titleArr[i] forState:UIControlStateNormal];
         
@@ -140,13 +150,32 @@
         
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         
-        [button setTitleColor:[RGBColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+        [button setTitleColor:[RGBColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
         
-        [button setTitleColor:[RGBColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
+        [button setTitleColor:[RGBColor colorWithHexString:@"#949DFF"] forState:UIControlStateSelected];
         
-        button.backgroundColor = [RGBColor colorWithHexString:@"949DFF"];
+        button.backgroundColor = [RGBColor colorWithHexString:@"ffffff"];
+        
+        [button setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
+        
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@xz",imageArr[i]]] forState:UIControlStateSelected];
         
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+//        20 21
+        
+//        button.titleEdgeInsets = UIEdgeInsetsMake(button.imageView.height, -button.titleLabel.bounds.size.width, 0, 0);
+//
+//        
+//        button.imageEdgeInsets = UIEdgeInsetsMake(-button.titleLabel.bounds.size.height,0,0,-button.titleLabel.bounds.size.width);
+//
+        
+//        button.imageEdgeInsets = UIEdgeInsetsMake(-button.titleLabel.bounds.size.height,0,0,-button.titleLabel.bounds.size.width);
+//
+//        button.titleEdgeInsets = UIEdgeInsetsMake(button.imageView.height, -button.titleLabel.bounds.size.width, 0, 0);
+//
+        [button verticalImageAndTitle:5];
+        
         
         if (i == 0) {
             
@@ -158,15 +187,23 @@
             
             _selectV.center = button.center;
             
-            _selectV.top = 37;
+            _selectV.top = 47;
 
         }
         
         [self.view addSubview:button];
 
     }
+
+    UIView *lineV = [[UIView alloc]initWithFrame:CGRectMake(0, 49, kScreenWidth, 1)];
     
-    _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0,39, kScreenWidth, kScreenHeight - 64 - 49 - 39) style:UITableViewStyleGrouped];
+    lineV.backgroundColor = [RGBColor colorWithHexString:@"d8d8d8"];
+    
+    [self.view addSubview:lineV];
+    
+    
+    
+    _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0,49, kScreenWidth, kScreenHeight - 64 - 49 - 49) style:UITableViewStyleGrouped];
     
     _myTableView.delegate = self;
     
@@ -235,6 +272,7 @@
             [_dataArr1 addObject:dic];
         }
         
+        
         [_peerTableView.header endRefreshing];
         [_peerTableView.footer endRefreshing];
         [_peerTableView reloadData];
@@ -256,7 +294,7 @@
 //
 - (void)creatPeerTableView{
     
-    _peerTableView = [[UITableView alloc]initWithFrame:CGRectMake(0,39, kScreenWidth, kScreenHeight - 64 - 49 - 39) style:UITableViewStyleGrouped];
+    _peerTableView = [[UITableView alloc]initWithFrame:CGRectMake(0,50, kScreenWidth, kScreenHeight - 64 - 49 - 50) style:UITableViewStyleGrouped];
     
     _peerTableView.delegate = self;
     
@@ -361,34 +399,7 @@
     
     NSString *url = @"";
     
-    //    if ([_is_delete isEqualToString:@"1"]) {
-    //
-    //        url = get_goods_list_newshtml;
-    //
-    //        [params setObject:_is_delete forKey:@"is_delete"];
-    //
-    //        [params setObject:_keyword forKey:@"keyword"];
-    //
-    //    }else{
-    //
-    //        if (_IsSearch) {
-    //
-    //            url = get_goods_list_newshtml;
-    //
-    //            [params setObject:_is_delete forKey:@"is_delete"];
-    //
-    //            [params setObject:_keyword forKey:@"keyword"];
-    //
-    //        }else{
-    //
-    //        }
-    //
-    //    }
-    
     url = get_goods_source_listhtml;
-    
-    
-    
     
     
     [DataSeviece requestUrl:url params:params success:^(id result) {
@@ -420,34 +431,11 @@
                 
                 [_dataArr addObject:dic];
             }
-
         }
         
         [_myTableView.header endRefreshing];
         [_myTableView.footer endRefreshing];
         [_myTableView reloadData];
-        
-        //        NSUInteger ii[2] = {0, rowCount - 1};
-        //        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
-        
-        //        if (_isNotifation) {
-        //
-        //            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:row - 1 ];
-        //
-        //
-        //            if (_dataArr.count < row) {
-        //
-        //                UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"该商品已删除或不存在" message:@"" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        //
-        //                [alertV show];
-        //
-        //                return ;
-        //
-        //            }
-        //
-        //            [_myTableView scrollToRowAtIndexPath:indexPath
-        //                                atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        //        }
         
         if (_dataArr.count == 0) {
             
@@ -457,7 +445,7 @@
             BQimageV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 128)/2, 80, 128, 128)];
             BQimageV.image = [UIImage imageNamed:@"bq@2x"];
             
-            [self.view addSubview:BQimageV];
+            [_myTableView addSubview:BQimageV];
             
             BQlabel = [[UILabel alloc]initWithFrame:CGRectMake(0, BQimageV.bottom+10, kScreenWidth, 20)];
             
@@ -466,7 +454,7 @@
             BQlabel.textColor = [RGBColor colorWithHexString:@"#666666"];
             BQlabel.font = [UIFont systemFontOfSize:16];
             BQlabel.textAlignment = NSTextAlignmentCenter;
-            [self.view addSubview:BQlabel];
+            [_myTableView addSubview:BQlabel];
             
         }else{
             
@@ -516,6 +504,9 @@
         
     }
     
+    
+    OneButtonPublishingVC.hidesBottomBarWhenPushed = YES;
+
     
     [self.navigationController pushViewController:OneButtonPublishingVC animated:YES];
     
@@ -639,6 +630,7 @@
 }
 
 
+
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
     if (_peerTableView == tableView) {
@@ -646,8 +638,9 @@
         PeerHeaderView *peerHeadrV = [[[NSBundle mainBundle]loadNibNamed:@"PeerHeaderView" owner:self options:nil] lastObject];
 
         peerHeadrV.dic = _dataArr1[section];
-        
+
         return peerHeadrV;
+        
     }
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 10)];
@@ -779,6 +772,23 @@
     }
     
 }
+//
+- (void)FollowNotification{
+    
+    
+    page1 = 1;
+    
+    [self loadData1];
+    
+    
+    
+}
+
+-(void)dealloc{
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
 
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -796,4 +806,6 @@
     [self.navigationController.navigationBar setShadowImage:nil];
     
 }
+
+
 @end

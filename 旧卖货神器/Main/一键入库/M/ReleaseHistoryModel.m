@@ -39,6 +39,7 @@
 //    }else if (arr.count > 3 && arr.count < 7){
 //        
 //        height = height + kScreenWidth/2 + 5;
+    
 //    }else if (arr.count > 6){
 //        
 //        height = height + kScreenWidth/4 * 3 + 10;
@@ -57,10 +58,7 @@
     
     NSDictionary *SYGData  = [defaults objectForKey:@"SYGData"];
     
-    
     CGFloat height = 0;
-    
-//    NSDictionary *dic = nil;
     
     NSArray *arr  = nil;
     
@@ -79,9 +77,9 @@
     NSMutableParagraphStyle *paraStyle01 = [[NSMutableParagraphStyle alloc] init];
     
     CGFloat emptylen = 20;
+    
     paraStyle01.firstLineHeadIndent = emptylen;//首行缩进
     
-
     CGRect rect = [dic[@"goods_description"] boundingRectWithSize:CGSizeMake(kScreenWidth - 20, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSParagraphStyleAttributeName:paraStyle01} context:nil];
     height = 80 + rect.size.height + 5;
     
@@ -106,6 +104,7 @@
         height = height + 10;
 
         if (unstatusArr.count != 0) {
+            
             height = height + 80;
         }
 

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RYSelectListView : UIView
+@interface RYSelectListView : UIView<UITableViewDelegate,UITableViewDataSource>
+
+typedef void (^BackBlock)(NSInteger index);
+
+@property (nonatomic,copy) BackBlock backBlock;
+
+
+@property (nonatomic,strong) NSDictionary *dataDic;
+
+@property (nonatomic,strong) UITableView *myTableView;
+
 
 @end

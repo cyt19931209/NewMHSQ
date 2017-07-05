@@ -42,7 +42,15 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *SPSJLabel;
 @property (weak, nonatomic) IBOutlet UILabel *SPGJLabel;
-@property (weak, nonatomic) IBOutlet UILabel *CCLabel;
+
+//@property (weak, nonatomic) IBOutlet UILabel *CCLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel1;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel3;
+
+@property (weak, nonatomic) IBOutlet UITextField *siez_xLabel;
+@property (weak, nonatomic) IBOutlet UITextField *size_yLabel;
+@property (weak, nonatomic) IBOutlet UITextField *size_zLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *PPLabel;
 @property (weak, nonatomic) IBOutlet UILabel *LBLabel;

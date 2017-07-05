@@ -405,8 +405,8 @@
                 [defaults removeObjectForKey:@"Text"];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:nil];
-                
-                [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
+
+                [self.navigationController popToRootViewControllerAnimated:YES];
                 
             }
             
@@ -1201,7 +1201,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
     
@@ -1222,8 +1222,6 @@
     BOOL isja;
 
 
-
-
     
     
     NSMutableArray *arr = [NSMutableArray array];
@@ -1240,7 +1238,6 @@
     UIImageView *imageV10 = [feedBackV viewWithTag:110];
 
 
-
     BOOL isPH = NO;
     BOOL isADM = NO;
     BOOL isWD = NO;
@@ -1251,8 +1248,6 @@
     BOOL isADMZY = NO;
     BOOL isADMSJ = NO;
     BOOL isJA = NO;
-
-
 
     
     for (int i = 0; i < _typeArr.count; i++) {
@@ -1506,9 +1501,6 @@
     
 
     
-
-
-    
     
     if (isph&&isadm&&iswb&&islph&&isxs&&issp&&iszd&&isadmzy&&isadmsj&&isja) {
         
@@ -1670,11 +1662,11 @@
             }
         }];
     }
-    
+
     if (imageV.tag == 108) {
         
         CGAffineTransform endAngle = CGAffineTransformMakeRotation(angle8 * (M_PI / 180.0f));
-        
+
         [UIView animateWithDuration:0.01 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
             imageV.transform = endAngle;
         } completion:^(BOOL finished) {
@@ -1701,6 +1693,7 @@
             }
         }];
     }
+    
     if (imageV.tag == 110) {
         
         CGAffineTransform endAngle = CGAffineTransformMakeRotation(angle10 * (M_PI / 180.0f));
@@ -1717,16 +1710,12 @@
         }];
     }
     
-
-
+    
 }
-
 
 - (void)editAction{
     
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     
     [DataSeviece requestUrl:goods_sharehtml params:[_params mutableCopy] success:^(id result) {
         
@@ -1738,7 +1727,7 @@
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpDataNotification" object:nil];
 
-            [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
             
         }
         
@@ -1747,16 +1736,14 @@
         NSLog(@"%@",error);
         
     }];
-
-
+    
 }
 
 - (void)leftBtnAction{
     
-    
+
     [self.navigationController popViewControllerAnimated:YES];
-
-
+    
 }
 
 

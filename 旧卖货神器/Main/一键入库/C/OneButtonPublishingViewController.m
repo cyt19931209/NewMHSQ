@@ -436,6 +436,7 @@
             
             _sizeLabel.text = @"表径:";
         }
+        
         if (_recordDic[@"size"]) {
             _bagsizeTextField.text = _recordDic[@"size"];
         }
@@ -604,7 +605,6 @@
             }
             
             _gemArr3 = [arr copy];
-            
         }
 
         if (_recordDic[@"clarity"]) {
@@ -740,11 +740,11 @@
 {
     if (0 == component)
     {
-        
+
         cityArr = jsonDataArr[row][@"city"];
         
         districtArr = jsonDataArr[row][@"city"][0][@"area"];
-        
+
         
         [pickerView reloadComponent:1];
         [pickerView reloadComponent:2];
@@ -1245,7 +1245,15 @@
         
         for (NSString *str in _imageStrArr) {
             if (![str isEqualToString:@""]) {
-                [urlArr addObject:[NSString stringWithFormat:@"%@/%@",imgUrl,str]];
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
+                NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+                
+                NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+                
+                
+
+                [urlArr addObject:[NSString stringWithFormat:@"%@/%@",imgUrl_API,str]];
             }
         }
         
@@ -1295,7 +1303,6 @@
     NSMutableDictionary *params1 = [NSMutableDictionary dictionary];
     
     [params1 setObject:SYGData[@"id"] forKey:@"uid"];
-
     
     [DataSeviece requestUrl:get_qiniu_tokenhtml params:params1 success:^(id result) {
         
@@ -1326,7 +1333,6 @@
             
             [params setObject:SYGData[@"shop_id"] forKey:@"x:shop_id"];
             
-            //            [params setObject:@{@"uid":SYGData[@"id"],@"sort":[NSString stringWithFormat:@"%ld",i + item]} forKey:@"data"];
             
             AFHTTPRequestOperationManager* _manager = [AFHTTPRequestOperationManager manager];
             
@@ -1342,14 +1348,13 @@
             } error:nil];
 
             
-            
             AFHTTPRequestOperation *operation = [_manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                 
                 NSLog(@"%@ %@",responseObject,responseObject[@"result"][@"msg"]);
                 
                 index ++;
                 
-                [_imageStrArr replaceObjectAtIndex:index + item withObject:responseObject[@"result"][@"data"][@"file_name"]];
+                [_imageStrArr replaceObjectAtIndex:index + item - 1 withObject:responseObject[@"result"][@"data"][@"file_name"]];
                 
                 NSLog(@"%@",_imageStrArr);
                 
@@ -1359,14 +1364,13 @@
                     
                 }
                 
-                
             } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
                 
                 NSLog(@"%@",error);
-                
+
                 index ++;
                 
-                [itemArr addObject:[NSNumber numberWithInteger:item + i]];
+                [itemArr addObject:[NSNumber numberWithInteger:item + i - 1]];
                 
                 if (index == assets.count && itemArr.count != 0) {
                     
@@ -3888,14 +3892,12 @@
         
         [params setObject:_imageArr forKey:@"imageArr"];
         
-        
         ReleaseCompleteVC.dataDic = [params copy];
         
         ReleaseCompleteVC.goods_id = _goods_id;
         
         ReleaseCompleteVC.isCopy = _isCopy;
         
-
         
         [self.navigationController pushViewController:ReleaseCompleteVC animated:YES];
         
@@ -4186,7 +4188,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     [self.navigationController.navigationBar setShadowImage:nil];
     
@@ -5113,7 +5115,7 @@
         
         //品牌
         BrandChoiceViewController *BrandChoiceVC = [[BrandChoiceViewController alloc]init];
-        
+
         BrandChoiceVC.brandStr = brandStr;
         
         BrandChoiceVC.sort_pid = _sortDic[@"pid"];
@@ -5149,17 +5151,7 @@
         
         [self.navigationController pushViewController:WDSortVC animated:YES];
         
-//        //材质
-//        ProductParametersViewController *ProductParametersVC = [[ProductParametersViewController alloc]init];
-//        
-//        ProductParametersVC.typeStr = @"1";
-//
-//        ProductParametersVC.dataArr = _ALLMaterialArr;
-//
-//        ProductParametersVC.oldArr = _materialArr;
-//        
-//        [self.navigationController pushViewController:ProductParametersVC animated:YES];
-//        
+
     }else if (indexPath.row == 18){
     
         GemParametersViewController *gemParametersVC = [[GemParametersViewController alloc]init];
@@ -5791,6 +5783,7 @@
     }else if ([_expectedId isEqualToString:@"5"]){
         _expectedTextField.text = @"10天以上";
     }
+    
     if ([_gradeId isEqualToString:@"1"]) {
         _gradeTextField.text = @"全新(未使用)";
     }else if ([_gradeId isEqualToString:@"2"]){
@@ -5960,6 +5953,15 @@
     
     __block NSInteger item = 0;
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+    
+    
+
+    
     if (_isOnePush) {
         
         NSMutableArray *urlArr = [NSMutableArray array];
@@ -5972,10 +5974,12 @@
             }
             
         }
+        NSLog(@"%@",urlArr);
         
         for (int i = 0 ; i < urlArr.count; i++) {
             
-            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imgUrl,urlArr[i]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,urlArr[i]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                 NSLog(@"");
             } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 item++;
@@ -5984,7 +5988,7 @@
                     
                     for (int i = 0 ; i < urlArr.count; i++) {
                         
-                        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imgUrl,urlArr[i]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",imgUrl_API,urlArr[i]]] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                             NSLog(@"");
                         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                             
@@ -6014,6 +6018,7 @@
         }
         
     }else{
+        
         
         for (int i = 0 ; i < imageArr.count; i++) {
             

@@ -30,7 +30,7 @@
     //改变导航栏标题的字体颜色和大小
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#949dff"]}];
+       NSForegroundColorAttributeName:[RGBColor colorWithHexString:@"#333333"]}];
     
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar@2x"] forBarMetrics:UIBarMetricsDefault];
@@ -53,10 +53,9 @@
     ZHView.layer.masksToBounds = YES;
     ZHView.layer.borderWidth = 1;
     ZHView.layer.borderColor = [RGBColor colorWithHexString:@"#999999"].CGColor;
-    
     [self.view addSubview:ZHView];
-    
 
+    
     UILabel *numLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 12, 50, 20)];
     
     numLabel.text = @"账号:";
@@ -120,9 +119,10 @@
         codeButton.layer.masksToBounds = YES;
         codeButton.layer.borderWidth = 1;
         codeButton.layer.borderColor = [RGBColor colorWithHexString:@"#949dff"].CGColor;
-        
-        [MMView addSubview:codeButton];
 
+        [MMView addSubview:codeButton];
+        
+        
     }else{
         numLabel1.text = @"密码:";
     }
@@ -400,6 +400,8 @@
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
+    
+    
     
 }
 

@@ -20,7 +20,15 @@
     
     _imageV.layer.masksToBounds = YES;
     
-    [_imageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imgUrl,_dic[@"logo"]]]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *serviceData = [defaults objectForKey:@"ServiceData"];
+    
+    NSString *imgUrl_API = serviceData[@"imgUrl_API"];
+    
+
+    
+    [_imageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imgUrl_API,_dic[@"logo"]]]];
     
     _HLButton.layer.cornerRadius = 4;
     _HLButton.layer.masksToBounds = YES;
